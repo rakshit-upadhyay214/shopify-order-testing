@@ -43,12 +43,6 @@ const snapshotsDir = 'snapshots';
     }
 });
 
-console.log(`\n--- Configuration ---`);
-console.log(`Collection: ${collectionFile}`);
-console.log(`Scenario:   ${scenarioFile}`);
-console.log(`Orders Dir: ${ordersDir}`);
-console.log(`Snapshots:  ${snapshotsDir}`);
-console.log(`---------------------\n`);
 
 // --- Environment Setup ---
 const environmentFile = 'shopify_env.json';
@@ -73,19 +67,28 @@ let currentOrderId = null;
 // --- Run Collection ---
 (async () => {
     try {
-        await runNewman();
+        const scenarioData = require(path.resolve(scenarioFile));
+        const scenarios = Array.isArray(scenarioData) ? scenarioData : [scenarioData];
+
+        for (let i = 0; i < scenarios.length; i++) {
+            if (i > 0) {
+                console.log('Waiting 20 seconds before next iteration...');
+                await new Promise(resolve => setTimeout(resolve, 20000));
+            }
+            await runNewman([scenarios[i]]);
+        }
     } catch (error) {
         console.error('Execution Failed:', error);
         process.exit(1);
     }
 })();
 
-function runNewman() {
+function runNewman(iterationData) {
     return new Promise((resolve, reject) => {
         newman.run({
             collection: require(path.resolve(collectionFile)),
             environment: require(path.resolve(environmentFile)),
-            iterationData: require(path.resolve(scenarioFile)),
+            iterationData: iterationData,
             reporters: 'cli',
             reporter: {
                 cli: {
@@ -95,7 +98,7 @@ function runNewman() {
             }
         })
             .on('start', () => {
-                console.log('Newman run started...');
+                // optional start logic
             })
             .on('console', (err, args) => handleConsoleLog(args))
             .on('iteration', (err, args) => handleIteration(err))
@@ -103,7 +106,7 @@ function runNewman() {
                 if (err || summary.error) {
                     console.error(`\nRun failed for ${collectionFile}.`);
                 } else {
-                    console.log(`\nRun complete for ${collectionFile}.`);
+                    // Success logic
                 }
                 resolve();
             });
@@ -162,7 +165,6 @@ function saveSnapshot(msg) {
 
 function handleIteration(err) {
     if (currentOrderId && !err) {
-        console.log(`[Script] Iteration finished. Downloading order ${currentOrderId}...`);
         downloadOrderJson(currentOrderId);
         currentOrderId = null; // Reset for next iteration
     }
