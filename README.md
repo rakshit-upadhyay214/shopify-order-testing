@@ -30,6 +30,10 @@ The scenario files contain `variantId` fields (e.g., `gid://shopify/ProductVaria
 - You **MUST** update these IDs to match valid, actively available product variants in your specific Shopify store.
 - If the variant IDs do not exist in your store, the order creation will fail.
 
+**Update Customer Information**
+The scenario files rely on customer data to associate orders with users.
+- Ensure the `email` or `customerId` fields in the scenario files correspond to valid customers in your store or are unique if creating new ones.
+
 ## Usage
 
 Use the `run.js` script to execute a Postman collection with a specific scenario file.

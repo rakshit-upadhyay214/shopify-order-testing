@@ -109,6 +109,7 @@
                             "const input = {",
                             "    lineItems: lineItems,",
                             "    email: scenario.email,",
+                            "    customerId: scenario.customerId,",
                             "    phone: scenario.phone,",
                             "    note: scenario.note,",
                             "    tags: scenario.tags,",
@@ -166,8 +167,11 @@
                     }
                 ],
                 "body": {
-                    "mode": "raw",
-                    "raw": "{\n    \"query\": \"mutation draftOrderCreate($input: DraftOrderInput!) { draftOrderCreate(input: $input) { draftOrder { id name presentmentCurrencyCode status totalPriceSet { shopMoney { amount currencyCode } } } userErrors { field message } } }\",\n    \"variables\": {{graphqlVariables}}\n}"
+                    "mode": "graphql",
+                    "graphql": {
+                        "query": "mutation draftOrderCreate($input: DraftOrderInput!) { draftOrderCreate(input: $input) { draftOrder { id name presentmentCurrencyCode status totalPriceSet { shopMoney { amount currencyCode } } } userErrors { field message } } }",
+                        "variables": "{{graphqlVariables}}"
+                    }
                 },
                 "url": {
                     "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
@@ -229,8 +233,11 @@
                     }
                 ],
                 "body": {
-                    "mode": "raw",
-                    "raw": "{\n    \"query\": \"mutation draftOrderComplete($id: ID!) { draftOrderComplete(id: $id) { draftOrder { order { id legacyResourceId } } userErrors { field message } } }\",\n    \"variables\": {\n        \"id\": \"{{draftOrderId}}\"\n    }\n}"
+                    "mode": "graphql",
+                    "graphql": {
+                        "query": "mutation draftOrderComplete($id: ID!) { draftOrderComplete(id: $id) { draftOrder { order { id legacyResourceId } } userErrors { field message } } }",
+                        "variables": "{\n  \"id\": \"{{draftOrderId}}\"\n}"
+                    }
                 },
                 "url": {
                     "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
