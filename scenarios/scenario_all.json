@@ -1,0 +1,358 @@
+[
+    {
+        "scenarioName": "Web order, Normal Return With Restock by Admin",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 2,
+                "price": 255
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 2
+            }
+        ],
+        "actionType": "RETURN",
+        "refundItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 2,
+                "restockType": "RETURN",
+                "reason": "Customer changed mind"
+            }
+        ],
+        "restockType": "RETURN",
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "Web order, Fulfilled Item Refund, No Restock",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "price": 315
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1
+            }
+        ],
+        "actionType": "REFUND",
+        "refundItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "restockType": "NO_RESTOCK"
+            }
+        ],
+        "restockType": "NO_RESTOCK",
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "Web order, Mixed Cancel and Refund (With Restock)",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/8056803983560",
+                "quantity": 1,
+                "price": 295
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 1,
+                "price": 255
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/8056803983560",
+                "quantity": 1
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 0
+            }
+        ],
+        "actionType": "REFUND",
+        "refundItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/8056803983560",
+                "quantity": 1,
+                "restockType": "RETURN"
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 1,
+                "restockType": "CANCEL"
+            }
+        ],
+        "restockType": "RETURN",
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "Web order, Unfulfilled Order Cancelled (No Restock)",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "price": 315
+            }
+        ],
+        "fulfillmentItems": [],
+        "actionType": "FULL_CANCEL",
+        "orderCancellation": true,
+        "netCancelParams": {
+            "restock": false,
+            "reason": "CUSTOMER",
+            "staffNote": "Customer changed mind (No Restock)",
+            "refundMethod": {
+                "originalPaymentMethodsRefund": true
+            },
+            "notifyCustomer": true
+        },
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "Web order, Unfulfilled Order Cancelled (With Restock)",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 2,
+                "price": 255
+            }
+        ],
+        "fulfillmentItems": [],
+        "actionType": "FULL_CANCEL",
+        "orderCancellation": true,
+        "netCancelParams": {
+            "restock": true,
+            "reason": "CUSTOMER",
+            "staffNote": "Customer changed mind (With Restock)",
+            "refundMethod": {
+                "originalPaymentMethodsRefund": true
+            },
+            "notifyCustomer": true
+        },
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "Web order, Return with Restocking Fees",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "price": 315
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1
+            }
+        ],
+        "actionType": "RETURN",
+        "refundItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "restockType": "RETURN",
+                "restockingFeePercentage": 15,
+                "reason": "Customer remorse"
+            }
+        ],
+        "restockType": "RETURN",
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "Web order, Appeasement Refund (No Line Items)",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 1,
+                "price": 255
+            }
+        ],
+        "fulfillmentItems": [],
+        "actionType": "REFUND",
+        "appeasementAmount": 25,
+        "restockType": "NO_RESTOCK",
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "Web order, Mixed Complex (Cancel Unfulfilled, Refund Fulfilled) - Case 1",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 2,
+                "price": 255
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 2,
+                "price": 255
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 1
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 1
+            }
+        ],
+        "actionType": "REFUND",
+        "refundItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 1,
+                "restockType": "CANCEL",
+                "reason": "Cancel unfulfilled quantity"
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 1,
+                "restockType": "NO_RESTOCK",
+                "reason": "Refund fulfilled quantity (No Restock)"
+            }
+        ],
+        "restockType": "RETURN",
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "Web order, Mixed Complex (Cancel Unfulfilled, Refund Fulfilled) - Case 2",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 2,
+                "price": 315
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 2,
+                "price": 315
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1
+            }
+        ],
+        "actionType": "REFUND",
+        "refundItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "restockType": "CANCEL",
+                "reason": "Cancel unfulfilled item"
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "restockType": "NO_RESTOCK",
+                "reason": "Refund fulfilled item (Damaged)"
+            }
+        ],
+        "restockType": "RETURN",
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    }
+]

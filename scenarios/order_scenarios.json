@@ -1,0 +1,255 @@
+[
+    {
+        "scenarioName": "1. Online Delivery Order No Adjustments",
+        "description": "Standard online order with delivery, no special adjustments.",
+        "tags": [
+            "Online",
+            "Delivery",
+            "NoAdjustments"
+        ],
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/8056832426184",
+                "quantity": 1,
+                "price": 255
+            }
+        ],
+        "shippingLines": [
+            {
+                "title": "Standard Shipping",
+                "price": 10,
+                "code": "Standard"
+            }
+        ],
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Shukla",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "2. Online Delivery Order with Discount Code & Taxes",
+        "description": "Order with single discount code (Fixed Amount), taxes, and shipping charges.",
+        "tags": [
+            "Online",
+            "Delivery",
+            "Discounts",
+            "Taxes"
+        ],
+        "taxesIncluded": true,
+        "discountCode": {
+            "code": "SUMMER5",
+            "amount": "15.00",
+            "type": "fixed_amount"
+        },
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/14664114438512",
+                "quantity": 3,
+                "price": 315,
+                "taxLines": [
+                    {
+                        "title": "VAT",
+                        "rate": 0.2,
+                        "price": 45
+                    }
+                ]
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/8056803983560",
+                "quantity": 2,
+                "price": 295,
+                "taxLines": [
+                    {
+                        "title": "VAT",
+                        "rate": 0.2,
+                        "price": 22
+                    }
+                ]
+            }
+        ],
+        "shippingLines": [
+            {
+                "title": "Expedited Shipping",
+                "price": 20,
+                "code": "Expedited",
+                "taxLines": [
+                    {
+                        "title": "Shipping Tax",
+                        "rate": 0.1,
+                        "price": 2
+                    }
+                ]
+            }
+        ],
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Shukla",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "3. Online Order with Free Shipping Discount Code",
+        "description": "Order applying a free shipping discount code.",
+        "tags": [
+            "Online",
+            "FreeShipping",
+            "Discounts"
+        ],
+        "taxesIncluded": true,
+        "discountCode": {
+            "code": "FREESHIP",
+            "type": "free_shipping"
+        },
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/8056832426184",
+                "quantity": 2,
+                "price": 255,
+                "taxLines": [
+                    {
+                        "title": "State Tax",
+                        "rate": 0.08,
+                        "price": 10.4
+                    }
+                ]
+            }
+        ],
+        "shippingLines": [
+            {
+                "title": "Standard Shipping",
+                "price": 15,
+                "code": "Standard"
+            }
+        ],
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Shukla",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    },
+    {
+        "scenarioName": "4. Online Digital Order with Discount",
+        "description": "Digital order with percentage discount and taxes.",
+        "tags": [
+            "Online",
+            "Digital",
+            "NoShippingAddress"
+        ],
+        "taxesIncluded": false,
+        "discountCode": {
+            "code": "DIGITAL10",
+            "percentage": 10,
+            "type": "percentage"
+        },
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/8056832426184",
+                "quantity": 1,
+                "price": 255,
+                "taxLines": [
+                    {
+                        "title": "Digital Tax",
+                        "rate": 0.05,
+                        "price": 2.48
+                    }
+                ]
+            }
+        ],
+        "shippingAddress": null,
+        "shippingLines": [],
+        "customerId": "gid://shopify/Customer/23056527622512"
+    },
+    {
+        "scenarioName": "5. Mixed Stacked Discounts Simulation",
+        "description": "Item 1 has Script (simulated via price reduction) and Order Code (5%). Item 2 has Order Code only using same Order Code.",
+        "tags": [
+            "Online",
+            "Stacked",
+            "Script",
+            "Code",
+            "TaxesIncluded"
+        ],
+        "taxesIncluded": true,
+        "discountCode": {
+            "code": "ORDER5",
+            "type": "percentage",
+            "percentage": 5.0
+        },
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/8056832426184",
+                "quantity": 3,
+                "price": 255.00,
+                "appliedDiscounts": [
+                    {
+                        "amount": 30.00,
+                        "description": "Script Discount"
+                    }
+                ],
+                "taxLines": [
+                    {
+                        "title": "VAT",
+                        "rate": 0.1,
+                        "price": 73.5
+                    }
+                ]
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/8056803983560",
+                "quantity": 2,
+                "price": 295.00,
+                "taxLines": [
+                    {
+                        "title": "VAT",
+                        "rate": 0.1,
+                        "price": 59.0
+                    }
+                ]
+            }
+        ],
+        "shippingLines": [
+            {
+                "title": "Shipping",
+                "price": 20.0,
+                "code": "Standard",
+                "taxLines": [
+                    {
+                        "title": "Shipping Tax",
+                        "rate": 0.1,
+                        "price": 2.0
+                    }
+                ]
+            }
+        ],
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Shukla",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    }
+]

@@ -1,0 +1,57 @@
+[
+    {
+        "scenarioName": "Draft Order Mixed Discounts",
+        "description": "Item 1 (Qty 3) with Script & Code discount. Item 2 (Qty 2) with Code discount. Shipping & Taxes included.",
+        "presentmentCurrencyCode": "USD",
+        "taxExempt": false,
+        "discountCodes": [
+            "ORDER5"
+        ],
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/329229847",
+                "quantity": 3,
+                "taxable": true,
+                "appliedDiscount": {
+                    "title": "Script Discount 5% Off",
+                    "description": "Simulated Script",
+                    "value": 5.00,
+                    "valueType": "PERCENTAGE"
+                }
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/329230251",
+                "quantity": 2,
+                "taxable": true
+            }
+        ],
+        "shippingLine": {
+            "title": "Standard Shipping",
+            "price": 20.00,
+            "code": "Standard"
+        },
+        "billingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        },
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        },
+        "email": "rakshit.upadhyay+test@example.com",
+        "acceptAutomaticDiscounts": true,
+        "allowDiscountCodesInCheckout": true
+    }
+]

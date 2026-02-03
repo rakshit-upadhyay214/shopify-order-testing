@@ -1,0 +1,42 @@
+[
+    {
+        "scenarioName": "Web order, Partially fulfilled",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/8056803983560",
+                "quantity": 2
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/8056832426184",
+                "quantity": 1
+            }
+        ],
+        "isFulfilled": true,
+        "fulfillmentItems": [
+            {
+                "quantity": 1
+            },
+            {
+                "quantity": 0
+            }
+        ],
+        "refundItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/8056832426184",
+                "quantity": 1,
+                "restockType": "RESTOCK"
+            }
+        ],
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Shukla",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    }
+]
