@@ -1,0 +1,927 @@
+{
+  "info": {
+    "_postman_id": "f0ef0c33-b828-4545-a29e-38cf10942691",
+    "name": "Order Sync",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "CreateOrder",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "// Stringify lineItems so they can be safely injected into the GraphQL variables string",
+              "const lineItems = pm.iterationData.get('lineItems');",
+              "              ",
+              "// Helper to check if we have new scenario fields",
+              "const isNewScenario = pm.iterationData.has('shippingLines') || pm.iterationData.has('taxesIncluded');",
+              "",
+              "// Filter lineItems to match OrderCreateLineItemInput structure",
+              "const graphqlLineItems = lineItems.map(item => {",
+              "    const lineItemInput = {",
+              "        variantId: item.variantId,",
+              "        quantity: item.quantity",
+              "    };",
+              "",
+              "    // Handle Applied Discounts (Net Price Calculation)",
+              "    // OrderCreateLineItemInput does not support appliedDiscounts directly.",
+              "    // We simulate it by reducing the price.",
+              "    let originalPrice = item.price || 0;",
+              "    if (item.appliedDiscounts && item.appliedDiscounts.length > 0) {",
+              "        const totalDiscount = item.appliedDiscounts.reduce((sum, discount) => sum + (discount.amount || 0), 0);",
+              "        // Ensure price doesn't go negative",
+              "        const netPrice = Math.max(0, originalPrice - (totalDiscount / item.quantity)); ",
+              "        // Note: validation of amount distribution is simplified here. ",
+              "        // Ideally, we'd use a draft order for perfect fidelity, but for orderCreate, we adjust the unit price.",
+              "        lineItemInput.priceSet = {",
+              "            shopMoney: {",
+              "                amount: netPrice.toFixed(2),",
+              "                currencyCode: \"USD\"",
+              "            }",
+              "        };",
+              "    } else if (item.price) {",
+              "         // Backward compatibility: explicit price if set",
+              "         // If not set, Shopify uses variant price. ",
+              "         // Check if we need to explicitly set it to override something or just let it be.",
+              "         // Previous script didn't set priceSet, relying on Shopify defaults or it was just filtered out.",
+              "         // But if we want to support \"price\" override from JSON:",
+              "         lineItemInput.priceSet = {",
+              "            shopMoney: {",
+              "                amount: item.price.toFixed(2),",
+              "                currencyCode: \"USD\"",
+              "            }",
+              "         };",
+              "    }",
+              "",
+              "    // Handle Tax Lines",
+              "    if (item.taxLines && item.taxLines.length > 0) {",
+              "        lineItemInput.taxLines = item.taxLines.map(tax => ({",
+              "            title: tax.title,",
+              "            rate: tax.rate,",
+              "            priceSet: {",
+              "                shopMoney: {",
+              "                    amount: tax.price.toFixed(2),",
+              "                    currencyCode: \"USD\"",
+              "                }",
+              "            }",
+              "        }));",
+              "    }",
+              "    ",
+              "    return lineItemInput;",
+              "});",
+              "",
+              "pm.variables.set(\"lineItemsString\", JSON.stringify(graphqlLineItems));",
+              "",
+              "// Calculate total for Transaction",
+              "// Note: This is an approximation. Real total depends on tax settings (included vs excluded) and shipping.",
+              "// For sync scenarios, we trust the `totalAmount` if provided, or calc simple sum.",
+              "let totalAmount = 0;",
+              "lineItems.forEach(item => {",
+              "    let itemPrice = item.price || 0;",
+              "    // If we adjusted price for discount, use that",
+              "    if (item.appliedDiscounts) {",
+              "         const totalDiscount = item.appliedDiscounts.reduce((sum, d) => sum + (d.amount || 0), 0);",
+              "         itemPrice = Math.max(0, itemPrice - (totalDiscount / item.quantity));",
+              "    }",
+              "    ",
+              "    let lineTotal = itemPrice * item.quantity;",
+              "    ",
+              "    totalAmount += lineTotal;",
+              "});",
+              "",
+              "// Add Shipping Cost and Taxes to Transaction Amount",
+              " const shippingLines = pm.iterationData.get('shippingLines');",
+              "let shippingComponent = [];",
+              "if (shippingLines && shippingLines.length > 0) {",
+              "    shippingLines.forEach(shipping => {",
+              "        totalAmount += (shipping.price || 0);",
+              "        ",
+              "        shippingComponent.push({",
+              "            title: shipping.title,",
+              "            priceSet: {",
+              "                shopMoney: {",
+              "                    amount: shipping.price.toFixed(2),",
+              "                    currencyCode: \"USD\"",
+              "                }",
+              "            },",
+              "            code: shipping.code",
+              "        });",
+              "    });",
+              "}",
+              "              ",
+              "const transactions = [{",
+              "    kind: \"SALE\",",
+              "    status: \"SUCCESS\",",
+              "    amountSet: {",
+              "        shopMoney: {",
+              "            amount: totalAmount.toFixed(2),",
+              "            currencyCode: \"USD\"",
+              "        }",
+              "    }",
+              "}];",
+              "              ",
+              "const orderInput = {",
+              "    customer: {",
+              "        toAssociate: {",
+              "            id: 'gid://shopify/Customer/23056527622512'",
+              "        }",
+              "    },",
+              "    lineItems: graphqlLineItems,",
+              "    transactions: transactions,",
+              "    shippingAddress: pm.iterationData.get('shippingAddress') !== null ? { // Allow null for digital orders",
+              "        firstName: 'Chinmay',",
+              "        lastName: 'Sharma',",
+              "        address1: '2200 Tinker Loop',",
+              "        city: 'Alamagordo',",
+              "        countryCode: 'US',",
+              "        provinceCode: 'NY',",
+              "        zip: '10001',",
+              "        phone: '15754794701'",
+              "    } : null,",
+              "    tags: pm.iterationData.get('tags') || [],",
+              "    taxesIncluded: pm.iterationData.get('taxesIncluded') || false",
+              "};",
+              "",
+              "if (shippingComponent.length > 0) {",
+              "    orderInput.shippingLines = shippingComponent;",
+              "}",
+              "",
+              "// Handle Discount Code (Order Level)",
+              "const discountCode = pm.iterationData.get('discountCode');",
+              "if (discountCode) {",
+              "    // Map scenario 'discountCode' to OrderCreateDiscountCodeInput",
+              "    // Scenario format: { \"code\": \"SUMMER5\", \"type\": \"percentage\", \"amount\": 5 } or { \"type\": \"fixed_amount\", \"amount\": 10 }",
+              "    ",
+              "    orderInput.discountCode = {};",
+              "    ",
+              "    if (discountCode.type === 'percentage') {",
+              "        orderInput.discountCode.itemPercentageDiscountCode = {",
+              "            code: discountCode.code,",
+              "            percentage: parseFloat(discountCode.amount || discountCode.percentage)",
+              "        };",
+              "    } else if (discountCode.type === 'fixed_amount') {",
+              "         orderInput.discountCode.itemFixedDiscountCode = {",
+              "            code: discountCode.code,",
+              "            amountSet: {",
+              "                shopMoney: {",
+              "                    amount: parseFloat(discountCode.amount).toFixed(2),",
+              "                    currencyCode: \"USD\"",
+              "                }",
+              "            }",
+              "        };",
+              "    } else if (discountCode.type === 'free_shipping') {",
+              "        orderInput.discountCode.freeShippingDiscountCode = {",
+              "            code: discountCode.code",
+              "        };",
+              "    }",
+              "}",
+              "",
+              "pm.variables.set('orderInput', JSON.stringify(orderInput));"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "if (response.data && response.data.orderCreate && response.data.orderCreate.order) {",
+              "    const order = response.data.orderCreate.order;",
+              "    pm.environment.set(\"orderId\", order.id);",
+              "    console.log('[Automation] Order Created:', order.id);",
+              "",
+              "    // Store line item mapping: variantId -> { lineItemId, price }",
+              "    const mapping = {};",
+              "    if (order.lineItems && order.lineItems.nodes) {",
+              "        order.lineItems.nodes.forEach(item => {",
+              "            if (item.variant && item.variant.id) {",
+              "                mapping[item.variant.id] = {",
+              "                    id: item.id,",
+              "                    price: parseFloat(item.originalUnitPriceSet.shopMoney.amount)",
+              "                };",
+              "            }",
+              "        });",
+              "    }",
+              "    pm.environment.set(\"lineItemMapping\", JSON.stringify(mapping));",
+              "} else {",
+              "    const errors = response.data && response.data.orderCreate ? response.data.orderCreate.userErrors : response;",
+              "    console.error('[Automation] Order Creation Failed:', JSON.stringify(errors));",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "id": "8423fbd0-be76-4a9a-816d-ba9aa1885959",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Shopify-Access-Token",
+            "value": "{{accessToken}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation CreateOrder($order: OrderCreateOrderInput!) {\n  orderCreate(order: $order) { __typename \n    userErrors { __typename \n      field\n      message\n    }\n    order {\n      id\n      name\n      lineItems(first: 10) { __typename \n        nodes { __typename \n          id\n          title\n          quantity\n          variant { __typename \n            id\n          }\n          originalUnitPriceSet { __typename \n            shopMoney { __typename \n              amount\n            }\n          }\n        }\n      }\n    }\n  }\n}",
+            "variables": "{\n  \"order\": {{orderInput}}\n}"
+          }
+        },
+        "url": {
+          "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+          "protocol": "https",
+          "host": [
+            "{{shopName}}",
+            "myshopify",
+            "com"
+          ],
+          "path": [
+            "admin",
+            "api",
+            "{{apiVersion}}",
+            "graphql.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Take Snapshot (Creation)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "if (response.data && response.data.order) {",
+              "    console.log('[SNAPSHOT][POST-CREATION][' + pm.iterationData.get('scenarioName') + ']', JSON.stringify(response.data.order, null, 2));",
+              "    ",
+              "    // Capture parent transaction ID for refund",
+              "    if (response.data.order.transactions && response.data.order.transactions.edges) {",
+              "        const saleTx = response.data.order.transactions.edges.find(edge => edge.node.kind === 'SALE' || edge.node.kind === 'CAPTURE');",
+              "        if (saleTx) {",
+              "            pm.environment.set('parentTransactionId', saleTx.node.id);",
+              "            console.log('[Automation] Captured Parent Transaction ID: ' + saleTx.node.id);",
+              "        }",
+              "    }",
+              "} else {",
+              "    console.warn('[Snapshot] Could not retrieve order for snapshot. OrderID: ' + pm.environment.get('orderId'));",
+              "    console.warn('[Snapshot] Full Response:', JSON.stringify(response));",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "id": "f1950294-abe6-47cb-8ea8-b0723e292628",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Shopify-Access-Token",
+            "value": "{{accessToken}}"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query GetFullOrderSnapshot($id: ID!) {\n  order(id: $id) {\n    __typename\n    id\n    name\n    displayFinancialStatus\n    displayFulfillmentStatus\n    createdAt\n    \n    currentTotalPriceSet {\n      shopMoney {\n        amount\n        currencyCode\n      }\n    }\n\n    lineItems(first: 50) {\n      nodes {\n        __typename\n        id\n        title\n        variant {\n          id\n          title\n        }\n        quantity\n        currentQuantity\n        unfulfilledQuantity\n        originalUnitPriceSet {\n          shopMoney {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n\n    fulfillments(first: 10) {\n      __typename\n      id\n      status\n      createdAt\n      fulfillmentLineItems(first: 50) {\n        nodes {\n          __typename\n          id\n          quantity\n          lineItem {\n            id\n          }\n        }\n      }\n    }\n\n    refunds(first: 10) {\n      __typename\n      id\n      createdAt\n      totalRefundedSet {\n        shopMoney {\n          amount\n          currencyCode\n        }\n      }\n      \n      refundLineItems(first: 20) {\n        edges {\n          node {\n            __typename\n            id\n            quantity\n            restockType\n            priceSet {\n              shopMoney {\n                amount\n              }\n            }\n            lineItem {\n              id\n              quantity\n              variant {\n                id\n              }\n            }\n          }\n        }\n      }\n    }\n\n    transactions {\n      __typename\n      id\n      kind\n      status\n      amountSet {\n        shopMoney {\n          amount\n          currencyCode\n        }\n      }\n    }\n  }\n}",
+            "variables": {
+              "id": "{{orderId}}"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+          "protocol": "https",
+          "host": [
+            "{{shopName}}",
+            "myshopify",
+            "com"
+          ],
+          "path": [
+            "admin",
+            "api",
+            "{{apiVersion}}",
+            "graphql.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GetFulfillmentOrders",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "if (response.errors || !response.data || !response.data.order || !response.data.order.fulfillmentOrders) {",
+              "    console.error('[Automation] Failed to fetch fulfillment orders:', JSON.stringify(response.errors || response));",
+              "    return;",
+              "}",
+              "",
+              "const fulfillmentOrders = response.data.order.fulfillmentOrders.nodes;",
+              "if (fulfillmentOrders.length === 0) {",
+              "    console.error('[Automation] No fulfillment orders found');",
+              "    return;",
+              "}",
+              "",
+              "const fo = fulfillmentOrders[0];",
+              "pm.environment.set(\"fulfillmentOrderId\", fo.id);",
+              "if (fo.assignedLocation && fo.assignedLocation.location) {",
+              "    pm.environment.set(\"locationId\", fo.assignedLocation.location.id);",
+              "    console.log('[Automation] Captured Location ID:', fo.assignedLocation.location.id);",
+              "}",
+              "",
+              "const scenarioLineItems = pm.iterationData.get('lineItems');",
+              "const scenarioFulfillmentQuantities = pm.iterationData.get('fulfillmentItems');",
+              "",
+              "const mappedLineItems = [];",
+              "const fulfillmentLineItemMapping = {};",
+              "",
+              "fo.lineItems.nodes.forEach(foLineItem => {",
+              "    const variantId = foLineItem.lineItem ? foLineItem.lineItem.variant.id : null;",
+              "    if (variantId) {",
+              "        fulfillmentLineItemMapping[variantId] = foLineItem.id;",
+              "    }",
+              "    const index = scenarioLineItems.findIndex(item => item.variantId === variantId);",
+              "    ",
+              "    if (index !== -1 && scenarioFulfillmentQuantities[index]) {",
+              "        const qtyToFulfill = scenarioFulfillmentQuantities[index].quantity;",
+              "        if (qtyToFulfill > 0) {",
+              "            mappedLineItems.push({",
+              "                id: foLineItem.id,",
+              "                quantity: qtyToFulfill",
+              "            });",
+              "        }",
+              "    }",
+              "});",
+              "",
+              "pm.environment.set(\"fulfillmentLineItems\", JSON.stringify(mappedLineItems));",
+              "pm.environment.set(\"fulfillmentLineItemMapping\", JSON.stringify(fulfillmentLineItemMapping));",
+              "console.log('[Automation] Mapped Fulfillment Items:', JSON.stringify(mappedLineItems));",
+              "console.log('[Automation] Captured Fulfillment Line Item Mapping:', JSON.stringify(fulfillmentLineItemMapping));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "id": "c5102722-8b33-47a5-ba81-ad0bf1bb3796",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Shopify-Access-Token",
+            "value": "{{accessToken}}"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query GetFO($id: ID!) {\n  order(id: $id) { __typename \n    fulfillmentOrders(first: 5) { __typename \n      nodes { __typename \n        id\n        assignedLocation {\n          location {\n            id\n          }\n        }\n        lineItems(first: 50) { __typename \n          nodes { __typename \n            id\n            lineItem {\n              variant { __typename \n                id\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}",
+            "variables": "{\n  \"id\": \"{{orderId}}\"\n}"
+          }
+        },
+        "url": {
+          "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+          "protocol": "https",
+          "host": [
+            "{{shopName}}",
+            "myshopify",
+            "com"
+          ],
+          "path": [
+            "admin",
+            "api",
+            "{{apiVersion}}",
+            "graphql.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "CreateFulfillment",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const itemsStr = pm.environment.get(\"fulfillmentLineItems\");",
+              "const items = itemsStr ? JSON.parse(itemsStr) : [];",
+              "if (items.length === 0) {",
+              "    console.log('[Automation] Skipping fulfillment: No items to fulfill');",
+              "    pm.execution.skipRequest();",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "if (response.data && response.data.fulfillmentCreate && response.data.fulfillmentCreate.fulfillment) {",
+              "    console.log('[Automation] Fulfillment Created Successfully');",
+              "    const fulfillment = response.data.fulfillmentCreate.fulfillment;",
+              "    const fliMapping = {};",
+              "    if (fulfillment.fulfillmentLineItems && fulfillment.fulfillmentLineItems.nodes) {",
+              "        fulfillment.fulfillmentLineItems.nodes.forEach(node => {",
+              "            if (node.lineItem && node.lineItem.variant) {",
+              "                fliMapping[node.lineItem.variant.id] = node.id;",
+              "            }",
+              "        });",
+              "        pm.environment.set('fulfillmentLineItemMapping', JSON.stringify(fliMapping));",
+              "        console.log('[Automation] Captured FulfillmentLineItem IDs:', JSON.stringify(fliMapping));",
+              "    }",
+              "} else {",
+              "    const errors = response.data && response.data.fulfillmentCreate ? response.data.fulfillmentCreate.userErrors : response;",
+              "    console.error('[Automation] Fulfillment Failed:', JSON.stringify(errors));",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "id": "89ccbd30-9079-4c51-9483-4fbf9f09bc4d",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Shopify-Access-Token",
+            "value": "{{accessToken}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation fulfillmentCreate($fulfillment: FulfillmentInput!) { __typename \n  fulfillmentCreate(fulfillment: $fulfillment) { __typename \n    fulfillment { __typename \n      id\n      status\n      fulfillmentLineItems(first: 50) { __typename \n        nodes { __typename \n          id\n          lineItem { __typename \n            variant { __typename \n              id\n            }\n          }\n        }\n      }\n    }\n    userErrors { __typename \n      field\n      message\n    }\n  }\n}",
+            "variables": "{\n  \"fulfillment\": {\n    \"lineItemsByFulfillmentOrder\": [\n      {\n        \"fulfillmentOrderId\": \"{{fulfillmentOrderId}}\",\n        \"fulfillmentOrderLineItems\": {{fulfillmentLineItems}}\n      }\n    ]\n  }\n}"
+          }
+        },
+        "url": {
+          "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+          "protocol": "https",
+          "host": [
+            "{{shopName}}",
+            "myshopify",
+            "com"
+          ],
+          "path": [
+            "admin",
+            "api",
+            "{{apiVersion}}",
+            "graphql.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Take Snapshot (Fulfillment)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "if (response.data && response.data.order) {",
+              "    console.log('[SNAPSHOT][FULFILLMENT][' + pm.iterationData.get('scenarioName') + ']', JSON.stringify(response.data.order, null, 2));",
+              "} else {",
+              "    console.warn('[Snapshot] Could not retrieve order for snapshot');",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "id": "2e930cd7-27b6-47ca-b646-9bfbfce61911",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Shopify-Access-Token",
+            "value": "{{accessToken}}"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query GetFullOrderSnapshot($id: ID!) {\n  order(id: $id) {\n    __typename\n    id\n    name\n    displayFinancialStatus\n    displayFulfillmentStatus\n    createdAt\n    \n    currentTotalPriceSet {\n      shopMoney {\n        amount\n        currencyCode\n      }\n    }\n\n    lineItems(first: 50) {\n      nodes {\n        __typename\n        id\n        title\n        variant {\n          id\n          title\n        }\n        quantity\n        currentQuantity\n        unfulfilledQuantity\n        originalUnitPriceSet {\n          shopMoney {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n\n    fulfillments(first: 10) {\n      __typename\n      id\n      status\n      createdAt\n      fulfillmentLineItems(first: 50) {\n        nodes {\n          __typename\n          id\n          quantity\n          lineItem {\n            id\n          }\n        }\n      }\n    }\n\n    refunds(first: 10) {\n      __typename\n      id\n      createdAt\n      totalRefundedSet {\n        shopMoney {\n          amount\n          currencyCode\n        }\n      }\n      \n      refundLineItems(first: 20) {\n        edges {\n          node {\n            __typename\n            id\n            quantity\n            restockType\n            priceSet {\n              shopMoney {\n                amount\n              }\n            }\n            lineItem {\n              id\n              quantity\n              variant {\n                id\n              }\n            }\n          }\n        }\n      }\n    }\n\n    transactions {\n      __typename\n      id\n      kind\n      status\n      amountSet {\n        shopMoney {\n          amount\n          currencyCode\n        }\n      }\n    }\n  }\n}",
+            "variables": {
+              "id": "{{orderId}}"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+          "protocol": "https",
+          "host": [
+            "{{shopName}}",
+            "myshopify",
+            "com"
+          ],
+          "path": [
+            "admin",
+            "api",
+            "{{apiVersion}}",
+            "graphql.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "CreateRefund",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const actionType = pm.iterationData.get('actionType');",
+              "if (actionType && actionType !== 'REFUND') {",
+              "    pm.execution.skipRequest();",
+              "    return;",
+              "}",
+              "",
+              "const refundItems = pm.iterationData.get('refundItems');",
+              "const appeasementAmount = pm.iterationData.get('appeasementAmount');",
+              "",
+              "// Handle appeasement: refund without line items",
+              "if (!refundItems || refundItems.length === 0) {",
+              "    if (appeasementAmount && appeasementAmount > 0) {",
+              "        console.log('[Automation] Processing appeasement refund:', appeasementAmount);",
+              "        pm.variables.set('refundInput', JSON.stringify({",
+              "            orderId: pm.environment.get('orderId'),",
+              "            note: 'Appeasement refund - goodwill gesture',",
+              "            notify: true,",
+              "            transactions: [{",
+              "                orderId: pm.environment.get('orderId'),",
+              "                amount: appeasementAmount.toFixed(2),",
+              "                gateway: 'cash',",
+              "                kind: 'REFUND'",
+              "            }]",
+              "        }));",
+              "        return;",
+              "    }",
+              "    console.log('[Automation] Skipping refund: No refund items in scenario');",
+              "    pm.execution.skipRequest();",
+              "    return;",
+              "}",
+              "",
+              "const mappingStr = pm.environment.get('lineItemMapping');",
+              "const mapping = mappingStr ? JSON.parse(mappingStr) : {};",
+              "",
+              "let totalAmount = 0;",
+              "const refundLineItems = [];",
+              "refundItems.forEach(item => {",
+              "    const itemData = mapping[item.variantId];",
+              "    if (itemData) {",
+              "        refundLineItems.push({",
+              "            lineItemId: itemData.id,",
+              "            quantity: item.quantity,",
+              "            restockType: (item.restockType === 'CANCEL') ? 'CANCEL' : (item.restockType || 'NO_RESTOCK'),",
+              "            locationId: item.locationId || pm.environment.get('locationId') || null",
+              "        });",
+              "        totalAmount += (item.quantity * itemData.price);",
+              "    } else {",
+              "        console.warn('[Automation] Could not find lineItemId for variant: ' + item.variantId);",
+              "    }",
+              "});",
+              "",
+              "if (refundLineItems.length === 0) {",
+              "    console.log('[Automation] Skipping refund: No valid line items mapped');",
+              "    pm.execution.skipRequest();",
+              "    return;",
+              "}",
+              "",
+              "console.log('[Automation] Calculated Refund Amount (Qty * Price):', totalAmount);",
+              "",
+              "// Get reason from first item or default",
+              "const refundReason = refundItems.find(item => item.reason)?.reason || \"Damaged product\";",
+              "",
+              "const refundTransaction = {",
+              "    orderId: pm.environment.get('orderId'),",
+              "    amount: totalAmount.toFixed(2),",
+              "    gateway: 'cash',",
+              "    kind: 'REFUND'",
+              "};",
+              "",
+              "const parentTransactionId = pm.environment.get('parentTransactionId');",
+              "if (parentTransactionId) {",
+              "    refundTransaction.parentId = parentTransactionId;",
+              "} else {",
+              "    console.warn('[Automation] Warning: No parentTransactionId found. Refund might fail.');",
+              "}",
+              "",
+              "pm.variables.set('refundInput', JSON.stringify({",
+              "    orderId: pm.environment.get('orderId'),",
+              "    refundLineItems: refundLineItems,",
+              "    note: refundReason,",
+              "    notify: true,",
+              "    transactions: [refundTransaction]",
+              "}));",
+              "console.log('[Automation] Refund Input Prepared');"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "if (response.data && response.data.refundCreate && response.data.refundCreate.refund) {",
+              "    console.log('[Automation] Refund Created:', response.data.refundCreate.refund.id);",
+              "    console.log('[Automation] Amount Refunded:', JSON.stringify(response.data.refundCreate.refund.totalRefundedSet));",
+              "} else {",
+              "    const errors = response.data && response.data.refundCreate ? response.data.refundCreate.userErrors : response;",
+              "    console.error('[Automation] Refund Failed:', JSON.stringify(errors));",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "id": "e7b0a1d2-3456-4321-abcd-1234567890ab",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Shopify-Access-Token",
+            "value": "{{accessToken}}"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation refundLineItem($input: RefundInput!) {\n  refundCreate(input: $input) { __typename \n    refund {\n      id\n      totalRefundedSet {\n        presentmentMoney { __typename \n          amount\n          currencyCode\n        }\n      }\n    }\n    userErrors { __typename \n      field\n      message\n    }\n  }\n}",
+            "variables": "{\n  \"input\": {{refundInput}}\n}"
+          }
+        },
+        "url": {
+          "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+          "protocol": "https",
+          "host": [
+            "{{shopName}}",
+            "myshopify",
+            "com"
+          ],
+          "path": [
+            "admin",
+            "api",
+            "{{apiVersion}}",
+            "graphql.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "CreateReturn",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const actionType = pm.iterationData.get('actionType');",
+              "if (actionType !== 'RETURN') {",
+              "    pm.execution.skipRequest();",
+              "    return;",
+              "}",
+              "",
+              "// For now, mirroring refund logic structure, assuming return logic might act similarly to Refund but without transactions or with different mutation",
+              "// Using returnCreate mutation if applicable or just logging placeholder",
+              "console.log('[Automation] Preparing Return for Order:', pm.environment.get('orderId'));",
+              "",
+              "const refundItems = pm.iterationData.get('refundItems');",
+              "if (!refundItems || refundItems.length === 0) {",
+              "    console.log('[Automation] No items to return');",
+              "    pm.execution.skipRequest();",
+              "    return;",
+              "}",
+              "",
+              "const mappingStr = pm.environment.get('fulfillmentLineItemMapping');",
+              "const mapping = mappingStr ? JSON.parse(mappingStr) : {};",
+              "const returnLineItems = [];",
+              "",
+              "refundItems.forEach(item => {",
+              "    // Only process items marked for RETURN restock type",
+              "    if (item.restockType === 'RETURN') {",
+              "        const fulfillmentLineItemId = mapping[item.variantId];",
+              "        if (fulfillmentLineItemId) {",
+              "            // Validation for ID type removed to support FulfillmentLineItem IDs",
+              "            const returnItem = {",
+              "                fulfillmentLineItemId: fulfillmentLineItemId,",
+              "                quantity: item.quantity,",
+              "                returnReason: 'NOT_AS_DESCRIBED'",
+              "            };",
+              "            if (item.restockingFeePercentage) {",
+              "                returnItem.restockingFee = {",
+              "                    percentage: item.restockingFeePercentage",
+              "                };",
+              "            }",
+              "            returnLineItems.push(returnItem);",
+              "        } else {",
+              "             console.warn('[Automation] Could not find fulfillmentLineItemId for variant: ' + item.variantId);",
+              "        }",
+              "    }",
+              "});",
+              "",
+              "if (returnLineItems.length === 0) {",
+              "    console.log('[Automation] Skipping return: No items with RETURN restock type or missing IDs');",
+              "    pm.execution.skipRequest();",
+              "    return;",
+              "}",
+              "",
+              "const returnInput = {",
+              "    orderId: pm.environment.get('orderId'),",
+              "    returnLineItems: returnLineItems,",
+              "    notifyCustomer: false",
+              "};",
+              "",
+              "pm.variables.set('returnInput', JSON.stringify(returnInput));",
+              "console.log('[Automation] Return Input:', JSON.stringify(returnInput));"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "if (response.data && response.data.returnCreate && response.data.returnCreate.return) {",
+              "    console.log('[Automation] Return Created:', response.data.returnCreate.return.id);",
+              "} else {",
+              "    const errors = response.data && response.data.returnCreate ? response.data.returnCreate.userErrors : response;",
+              "    console.error('[Automation] Return Creation Failed:', JSON.stringify(errors));",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Shopify-Access-Token",
+            "value": "{{accessToken}}"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation returnCreate($returnInput: ReturnInput!) {\n  returnCreate(returnInput: $returnInput) { __typename \n    return {\n      id\n      status\n    }\n    userErrors { __typename \n      field\n      message\n    }\n  }\n}",
+            "variables": "{\n  \"returnInput\": {{returnInput}}\n}"
+          }
+        },
+        "url": {
+          "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+          "protocol": "https",
+          "host": [
+            "{{shopName}}",
+            "myshopify",
+            "com"
+          ],
+          "path": [
+            "admin",
+            "api",
+            "{{apiVersion}}",
+            "graphql.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Cancel Order",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const actionType = pm.iterationData.get('actionType');",
+              "if (actionType !== 'FULL_CANCEL') {",
+              "    pm.execution.skipRequest();",
+              "    return;",
+              "}",
+              "console.log('[Automation] Executing Full Order Cancellation for:', pm.environment.get('orderId'));",
+              "",
+              "// Map netCancelParams to variables",
+              "const params = pm.iterationData.get('netCancelParams') || {};",
+              "pm.variables.set('notifyCustomer', params.notifyCustomer !== false);",
+              "pm.variables.set('refundMethod', JSON.stringify(params.refundMethod || { originalPaymentMethodsRefund: true }));",
+              "pm.variables.set('restock', params.restock !== false);",
+              "pm.variables.set('reason', params.reason || 'OTHER');",
+              "pm.variables.set('staffNote', params.staffNote || '');"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "if (response.data && response.data.orderCancel && (response.data.orderCancel.job || !response.data.orderCancel.orderCancelUserErrors.length)) {",
+              "    console.log('[Automation] Full Order Cancel Job Started');",
+              "} else {",
+              "    const errors = response.data && response.data.orderCancel ? response.data.orderCancel.orderCancelUserErrors : response;",
+              "    console.error('[Automation] Full Cancellation Failed:', JSON.stringify(errors));",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Shopify-Access-Token",
+            "value": "{{accessToken}}"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation OrderCancel($orderId: ID!, $notifyCustomer: Boolean, $refundMethod: OrderCancelRefundMethodInput!, $restock: Boolean!, $reason: OrderCancelReason!, $staffNote: String) { orderCancel(orderId: $orderId, notifyCustomer: $notifyCustomer, refundMethod: $refundMethod, restock: $restock, reason: $reason, staffNote: $staffNote) { job { id done } orderCancelUserErrors { field message code } } }",
+            "variables": "{\n  \"orderId\": \"{{orderId}}\",\n  \"notifyCustomer\": {{notifyCustomer}},\n  \"refundMethod\": {{refundMethod}},\n  \"restock\": {{restock}},\n  \"reason\": \"{{reason}}\",\n  \"staffNote\": \"{{staffNote}}\"\n}"
+          }
+        },
+        "url": {
+          "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+          "protocol": "https",
+          "host": [
+            "{{shopName}}",
+            "myshopify",
+            "com"
+          ],
+          "path": [
+            "admin",
+            "api",
+            "{{apiVersion}}",
+            "graphql.json"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Take Snapshot (Refund / Final)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "if (response.data && response.data.order) {",
+              "    console.log('[SNAPSHOT][FINAL][' + pm.iterationData.get('scenarioName') + ']', JSON.stringify(response.data.order, null, 2));",
+              "} else {",
+              "    console.warn('[Snapshot] Could not retrieve order for snapshot');",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "id": "f2c3d4e5-6789-0abc-def0-1234567890bc",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Shopify-Access-Token",
+            "value": "{{accessToken}}"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query GetFullOrderSnapshot($id: ID!) {\n  order(id: $id) {\n    __typename\n    id\n    name\n    displayFinancialStatus\n    displayFulfillmentStatus\n    createdAt\n    \n    currentTotalPriceSet {\n      shopMoney {\n        amount\n        currencyCode\n      }\n    }\n\n    lineItems(first: 50) {\n      nodes {\n        __typename\n        id\n        title\n        variant {\n          id\n          title\n        }\n        quantity\n        currentQuantity\n        unfulfilledQuantity\n        originalUnitPriceSet {\n          shopMoney {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n\n    fulfillments(first: 10) {\n      __typename\n      id\n      status\n      createdAt\n      fulfillmentLineItems(first: 50) {\n        nodes {\n          __typename\n          id\n          quantity\n          lineItem {\n            id\n          }\n        }\n      }\n    }\n\n    refunds(first: 10) {\n      __typename\n      id\n      createdAt\n      totalRefundedSet {\n        shopMoney {\n          amount\n          currencyCode\n        }\n      }\n      \n      refundLineItems(first: 20) {\n        edges {\n          node {\n            __typename\n            id\n            quantity\n            restockType\n            priceSet {\n              shopMoney {\n                amount\n              }\n            }\n            lineItem {\n              id\n              quantity\n              variant {\n                id\n              }\n            }\n          }\n        }\n      }\n    }\n\n    transactions {\n      __typename\n      id\n      kind\n      status\n      amountSet {\n        shopMoney {\n          amount\n          currencyCode\n        }\n      }\n    }\n  }\n}",
+            "variables": {
+              "id": "{{orderId}}"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+          "protocol": "https",
+          "host": [
+            "{{shopName}}",
+            "myshopify",
+            "com"
+          ],
+          "path": [
+            "admin",
+            "api",
+            "{{apiVersion}}",
+            "graphql.json"
+          ]
+        }
+      }
+    }
+  ]
+}

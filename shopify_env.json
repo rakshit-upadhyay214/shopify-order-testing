@@ -1,0 +1,32 @@
+{
+    "id": "shopify-automation-env",
+    "name": "Shopify Automation Env",
+    "values": [
+        {
+            "key": "shopName",
+            "value": "",
+            "enabled": true
+        },
+        {
+            "key": "accessToken",
+            "value": "",
+            "enabled": true
+        },
+        {
+            "key": "apiVersion",
+            "value": "2026-01",
+            "enabled": true
+        },
+        {
+            "key": "orderId",
+            "value": "",
+            "enabled": true
+        },
+        {
+            "key": "fulfillmentOrderId",
+            "value": "",
+            "enabled": true
+        }
+    ],
+    "_postman_variable_scope": "environment"
+}

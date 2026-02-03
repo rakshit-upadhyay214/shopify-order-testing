@@ -1,0 +1,260 @@
+{
+    "info": {
+        "_postman_id": "draft-order-creation-uuid",
+        "name": "Draft Order Creation",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create Draft Order",
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [
+                            "const scenario = pm.iterationData.toObject().input || pm.iterationData.toObject();",
+                            "// Fallback if 'input' key is not present in data file, use root",
+                            "",
+                            "const presentmentCurrency = scenario.presentmentCurrencyCode || \"USD\";",
+                            "",
+                            "// 1. Build Line Items",
+                            "const lineItems = (scenario.lineItems || []).map(item => {",
+                            "    const inputItem = {",
+                            "        quantity: item.quantity",
+                            "    };",
+                            "",
+                            "    // Handle Variant ID vs Custom Item",
+                            "    if (item.variantId) {",
+                            "        inputItem.variantId = item.variantId;",
+                            "    } else {",
+                            "        // Custom Item",
+                            "        inputItem.title = item.title;",
+                            "        inputItem.originalUnitPriceWithCurrency = {",
+                            "             amount: item.originalUnitPrice ? item.originalUnitPrice.toString() : \"0.00\",",
+                            "             currencyCode: presentmentCurrency",
+                            "        };",
+                            "    }",
+                            "",
+                            "    // Applied Discount (Line Item Level)",
+                            "    // User Example: { title, description, value, valueType, amount }",
+                            "    if (item.appliedDiscount) {",
+                            "        inputItem.appliedDiscount = {",
+                            "            title: item.appliedDiscount.title,",
+                            "            description: item.appliedDiscount.description,",
+                            "            value: parseFloat(item.appliedDiscount.value),",
+                            "            valueType: item.appliedDiscount.valueType",
+                            "        };",
+                            "        // Note: 'amount' is not in DraftOrderAppliedDiscountInput, 'amountWithCurrency' is.",
+                            "        // 'value' is what DraftOrderAppliedDiscountInput expects for the magnitude.",
+                            "    } else if (item.appliedDiscounts && item.appliedDiscounts.length > 0) {",
+                            "        // Backward compatibility for array style if needed",
+                            "        const d = item.appliedDiscounts[0];",
+                            "        inputItem.appliedDiscount = {",
+                            "             title: d.title || \"Discount\",",
+                            "             value: parseFloat(d.amount),",
+                            "             valueType: \"FIXED_AMOUNT\"",
+                            "        };",
+                            "    }",
+                            "",
+                            "    // Custom Attributes",
+                            "    if (item.customAttributes) {",
+                            "        inputItem.customAttributes = item.customAttributes.map(attr => ({",
+                            "            key: attr.key,",
+                            "            value: attr.value",
+                            "        }));",
+                            "    }",
+                            "    ",
+                            "    // Boolean flags",
+                            "    if (item.hasOwnProperty('taxable')) inputItem.taxable = item.taxable;",
+                            "",
+                            "    return inputItem;",
+                            "});",
+                            "",
+                            "// 2. Shipping Line",
+                            "let shippingLine = null;",
+                            "if (scenario.shippingLine) {",
+                            "    shippingLine = {",
+                            "        title: scenario.shippingLine.title,",
+                            "        priceWithCurrency: {",
+                            "            amount: scenario.shippingLine.price.toString(),",
+                            "            currencyCode: presentmentCurrency",
+                            "        },",
+                            "        shippingRateHandle: scenario.shippingLine.code || null",
+                            "    };",
+                            "} else if (scenario.shippingLines && scenario.shippingLines.length > 0) {",
+                            "    // Backward compatibility",
+                            "    const sl = scenario.shippingLines[0];",
+                            "    shippingLine = {",
+                            "        title: sl.title,",
+                            "        priceWithCurrency: {",
+                            "            amount: sl.price.toString(),",
+                            "            currencyCode: presentmentCurrency",
+                            "        },",
+                            "        shippingRateHandle: sl.code",
+                            "    };",
+                            "}",
+                            "",
+                            "// 3. Applied Discount (Order Level)",
+                            "let appliedDiscount = null;",
+                            "if (scenario.appliedDiscount) {",
+                            "    appliedDiscount = {",
+                            "        title: scenario.appliedDiscount.title,",
+                            "        description: scenario.appliedDiscount.description,",
+                            "        value: parseFloat(scenario.appliedDiscount.value),",
+                            "        valueType: scenario.appliedDiscount.valueType",
+                            "    };",
+                            "}",
+                            "",
+                            "// 4. Input Construction",
+                            "const input = {",
+                            "    lineItems: lineItems,",
+                            "    email: scenario.email,",
+                            "    phone: scenario.phone,",
+                            "    note: scenario.note,",
+                            "    tags: scenario.tags,",
+                            "    taxExempt: scenario.taxExempt,",
+                            "    acceptAutomaticDiscounts: scenario.acceptAutomaticDiscounts,",
+                            "    allowDiscountCodesInCheckout: scenario.allowDiscountCodesInCheckout,",
+                            "    sourceName: scenario.sourceName,",
+                            "    presentmentCurrencyCode: presentmentCurrency,",
+                            "    billingAddress: scenario.billingAddress,",
+                            "    shippingAddress: scenario.shippingAddress,",
+                            "    shippingLine: shippingLine,",
+                            "    appliedDiscount: appliedDiscount,",
+                            "    discountCodes: scenario.discountCodes,",
+                            "    customAttributes: scenario.customAttributes,",
+                            "    metafields: scenario.metafields,",
+                            "    paymentTerms: scenario.paymentTerms",
+                            "};",
+                            "",
+                            "pm.variables.set(\"graphqlVariables\", JSON.stringify({ input: input }));",
+                            "console.log(\"Draft Order Variables prepared:\", JSON.stringify({ input: input }));"
+                        ],
+                        "type": "text/javascript"
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "const jsonData = pm.response.json();",
+                            "if (jsonData.data && jsonData.data.draftOrderCreate && jsonData.data.draftOrderCreate.draftOrder) {",
+                            "    const draftOrderId = jsonData.data.draftOrderCreate.draftOrder.id;",
+                            "    pm.collectionVariables.set(\"draftOrderId\", draftOrderId);",
+                            "    pm.environment.set(\"draftOrderId\", draftOrderId);",
+                            "    console.log(\"Draft Order Created: \" + draftOrderId);",
+                            "} else {",
+                            "    console.error(\"Failed to create draft order\", jsonData);",
+                            "}"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "X-Shopify-Access-Token",
+                        "value": "{{accessToken}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"query\": \"mutation draftOrderCreate($input: DraftOrderInput!) { draftOrderCreate(input: $input) { draftOrder { id name presentmentCurrencyCode status totalPriceSet { shopMoney { amount currencyCode } } } userErrors { field message } } }\",\n    \"variables\": {{graphqlVariables}}\n}"
+                },
+                "url": {
+                    "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+                    "protocol": "https",
+                    "host": [
+                        "{{shopName}}",
+                        "myshopify",
+                        "com"
+                    ],
+                    "path": [
+                        "admin",
+                        "api",
+                        "{{apiVersion}}",
+                        "graphql.json"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Complete Draft Order",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "const jsonData = pm.response.json();",
+                            "if (jsonData.data && jsonData.data.draftOrderComplete && jsonData.data.draftOrderComplete.draftOrder) {",
+                            "    // Shopify returns the Order object inside the payload",
+                            "    const order = jsonData.data.draftOrderComplete.draftOrder.order;",
+                            "    if (order) {",
+                            "        const legacyId = order.legacyResourceId;",
+                            "        // This LOG MESSAGE is crucial for run.js to pick up the ID",
+                            "        console.log(\"Order Created: \" + order.id);",
+                            "        console.log(\"Legacy Order ID: \" + legacyId);",
+                            "    } else {",
+                            "        console.error(\"Draft Order completed but no Order object returned.\");",
+                            "    }",
+                            "} else {",
+                            "    console.error(\"Failed to complete draft order\", jsonData);",
+                            "}"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "X-Shopify-Access-Token",
+                        "value": "{{accessToken}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"query\": \"mutation draftOrderComplete($id: ID!) { draftOrderComplete(id: $id) { draftOrder { order { id legacyResourceId } } userErrors { field message } } }\",\n    \"variables\": {\n        \"id\": \"{{draftOrderId}}\"\n    }\n}"
+                },
+                "url": {
+                    "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+                    "protocol": "https",
+                    "host": [
+                        "{{shopName}}",
+                        "myshopify",
+                        "com"
+                    ],
+                    "path": [
+                        "admin",
+                        "api",
+                        "{{apiVersion}}",
+                        "graphql.json"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "variable": [
+        {
+            "key": "draftOrderId",
+            "value": ""
+        }
+    ]
+}
