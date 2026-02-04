@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Environment Variables (Sensitive Data)
+shopify_env.json
+.env
+
+# Output Directories (Generated Data)
+orders/
+replicated_orders/
+reports/
+snapshots/
+
+# System Files
+.DS_Store
