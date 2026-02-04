@@ -13,6 +13,8 @@ function parseArgs() {
             config.collectionPath = args[++i];
         } else if (arg === '--scenario' || arg === '-s' || arg === '--data' || arg === '-d') {
             config.scenarioPath = args[++i];
+        } else if (arg === '--iterations' || arg === '-n') {
+            config.iterations = parseInt(args[++i], 10);
         }
     }
     return config;
@@ -21,10 +23,11 @@ function parseArgs() {
 const config = parseArgs();
 
 if (!config.collectionPath || !config.scenarioPath) {
-    console.error('Usage: node run.js --collection <collection_file> --scenario <scenario_file>');
+    console.error('Usage: node run.js --collection <collection_file> --scenario <scenario_file> [--iterations <number>]');
     console.error('Options:');
     console.error('  --collection, -c   Path to the Postman collection JSON file');
     console.error('  --scenario, -s     Path to the data/scenario JSON file (alias: --data, -d)');
+    console.error('  --iterations, -n   Number of iterations to run (optional)');
     process.exit(1);
 }
 
@@ -68,12 +71,22 @@ let currentOrderId = null;
 (async () => {
     try {
         const scenarioData = require(path.resolve(scenarioFile));
-        const scenarios = Array.isArray(scenarioData) ? scenarioData : [scenarioData];
+        let scenarios = Array.isArray(scenarioData) ? scenarioData : [scenarioData];
+
+        // --- Iteration Logic ---
+        if (config.iterations && config.iterations > 0) {
+            console.log(`[Config] Repeating full scenario set ${config.iterations} times.`);
+            const baseScenarios = [...scenarios];
+            scenarios = [];
+            for (let k = 0; k < config.iterations; k++) {
+                scenarios = scenarios.concat(baseScenarios);
+            }
+        }
 
         for (let i = 0; i < scenarios.length; i++) {
             if (i > 0) {
-                console.log('Waiting 20 seconds before next iteration...');
-                await new Promise(resolve => setTimeout(resolve, 20000));
+                console.log('Waiting 60 seconds before next iteration...');
+                await new Promise(resolve => setTimeout(resolve, 60000));
             }
             await runNewman([scenarios[i]]);
         }
