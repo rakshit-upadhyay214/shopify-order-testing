@@ -1,33 +1,33 @@
 [
     {
-        "scenarioName": "Web order, Full Fulfillment, Refund with Restock",
-        "isFulfilled": true,
+        "scenarioName": "Web order, Normal Return With Restock by Admin",
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/14664114438512",
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
                 "quantity": 2,
-                "price": 315
+                "price": 255
             }
         ],
         "fulfillmentItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/14664114438512",
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
                 "quantity": 2
             }
         ],
-        "actionType": "REFUND",
+        "actionType": "RETURN",
         "refundItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/14664114438512",
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
                 "quantity": 2,
                 "restockType": "RETURN",
-                "reason": "Item was too small"
+                "reason": "Customer changed mind"
             }
         ],
+        "restockType": "RETURN",
         "customerId": "gid://shopify/Customer/23056527622512",
         "shippingAddress": {
             "firstName": "Chinmay",
-            "lastName": "Shukla",
+            "lastName": "Sharma",
             "address1": "2200 Tinker Loop",
             "city": "Alamagordo",
             "province": "New York",

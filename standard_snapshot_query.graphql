@@ -1,0 +1,108 @@
+query GetFullOrderSnapshot($id: ID!) {
+  order(id: $id) {
+    __typename
+    id
+    name
+    displayFinancialStatus
+    displayFulfillmentStatus
+    createdAt
+    
+    currentTotalPriceSet {
+      shopMoney {
+        amount
+        currencyCode
+      }
+    }
+
+    lineItems(first: 50) {
+      nodes {
+        __typename
+        id
+        title
+        variant {
+          id
+          title
+        }
+        quantity
+        currentQuantity
+        unfulfilledQuantity
+        originalUnitPriceSet {
+          shopMoney {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+
+    fulfillments(first: 10) {
+      __typename
+      id
+      status
+      createdAt
+      fulfillmentLineItems(first: 50) {
+        nodes {
+          __typename
+          id
+          quantity
+          lineItem {
+            id
+          }
+        }
+      }
+    }
+
+    refunds(first: 10) {
+      __typename
+      id
+      createdAt
+      totalRefundedSet {
+        shopMoney {
+          amount
+          currencyCode
+        }
+      }
+      
+      refundLineItems(first: 20) {
+        edges {
+          node {
+            __typename
+            id
+            quantity
+            restockType
+            priceSet {
+              shopMoney {
+                amount
+              }
+            }
+            lineItem {
+              id
+              quantity
+              variant {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+
+    transactions(first: 20) {
+      __typename
+      edges {
+        node {
+          __typename
+          id
+          kind
+          status
+          amountSet {
+            shopMoney {
+              amount
+              currencyCode
+            }
+          }
+        }
+      }
+    }
+  }
+}

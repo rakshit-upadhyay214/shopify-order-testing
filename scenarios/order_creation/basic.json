@@ -1,0 +1,25 @@
+[
+    {
+        "scenarioName": "Web order (Basic)",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 1,
+                "price": 255
+            }
+        ],
+        "isFulfilled": false,
+        "fulfillmentItems": [],
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "John",
+            "lastName": "Doe",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    }
+]

@@ -1,0 +1,38 @@
+[
+    {
+        "scenarioName": "Web order, Fulfilled Item Refund, No Restock",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "price": 315
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1
+            }
+        ],
+        "actionType": "REFUND",
+        "refundItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "restockType": "NO_RESTOCK"
+            }
+        ],
+        "restockType": "NO_RESTOCK",
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    }
+]

@@ -1,0 +1,40 @@
+[
+    {
+        "scenarioName": "Web order, Return with Restocking Fees",
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "price": 315
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1
+            }
+        ],
+        "actionType": "RETURN",
+        "refundItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "restockType": "RETURN",
+                "restockingFeePercentage": 15,
+                "reason": "Customer remorse"
+            }
+        ],
+        "restockType": "RETURN",
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    }
+]
