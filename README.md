@@ -23,7 +23,7 @@ Open `shopify_env.json` and set the following values:
 - **`apiVersion`**: The Admin API version to use (e.g., `2024-01`).
 
 ### 2. Configure Scenarios
-Scenario files can be found in the `scenarios/` directory (e.g., `scenarios/scenario_draft_mixed_discounts.json`). These JSON files define the data used for each test run.
+Scenario files can be found in the `scenarios/` directory (e.g., `scenarios/refunds_returns/partially_fulfilled.json`). These JSON files define the data used for each test run.
 
 **CRITICAL: Update Variant IDs**
 The scenario files contain `variantId` fields (e.g., `gid://shopify/ProductVariant/123456789`).
@@ -48,18 +48,25 @@ node run.js --collection "<Collection Filename>" --scenario "<Path to Scenario J
 **1. Create a Draft Order**
 This uses the *DraftOrderCreation* collection to create a draft order, verify it, and complete it to create a real order.
 ```bash
-node run.js --collection "DraftOrderCreation.postman_collection.json" --scenario "scenarios/scenario_draft_mixed_discounts.json"
+node run.js --collection "DraftOrderCreation.postman_collection.json" --scenario "scenarios/draft_order_creation/mixed_discounts.json"
 ```
 
 **2. Standard Order Creation & Refunds**
-Use this to test standard order creation flows or sync processes.
+Use this to test standard order creation flows or sync processes, including refunds.
 ```bash
-node run.js --collection "OrderAndRefunds.postman_collection.json" --scenario "scenarios/order_scenarios.json"
+node run.js --collection "OrderAndRefunds.postman_collection.json" --scenario "scenarios/refunds_returns/return_restock_admin.json"
 ```
 
 ### Arguments
 - `--collection` (or `-c`): The path to the Postman collection file (e.g., `DraftOrderCreation.postman_collection.json`).
 - `--scenario` (or `-s`): The path to the scenario JSON file.
+- `--iterations` (or `-n`): (Optional) Number of times to run the full set of scenarios. Defaults to 1.
+
+### 3. Run Multiple Iterations
+Run the scenarios 3 times in a row 
+```bash
+node run.js --collection "OrderAndRefunds.postman_collection.json" --scenario "scenarios/order_creation/basic.json" --iterations 3
+```
 
 ## Output
 
