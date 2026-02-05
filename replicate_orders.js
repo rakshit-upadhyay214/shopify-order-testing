@@ -3,6 +3,9 @@ const path = require('path');
 
 let inputFile = null;
 let totalOrders = 1;
+let shouldUpload = false;
+const MOQUI_URL = "https://krewe-maarg-uat.hotwax.io/rest/s1/admin/uploadDataManagerFile";
+const MOQUI_TOKEN = "Bearer ";
 
 const args = process.argv.slice(2);
 for (let i = 0; i < args.length; i++) {
@@ -11,6 +14,8 @@ for (let i = 0; i < args.length; i++) {
         inputFile = args[++i];
     } else if (arg === '--count' || arg === '-n') {
         totalOrders = parseInt(args[++i], 10);
+    } else if (arg === '--upload' || arg === '-u') {
+        shouldUpload = true;
     }
 }
 
@@ -35,6 +40,46 @@ function generateRandomId() {
     const min = 1000000000000;
     const max = 9999999999999;
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+async function uploadToMoqui(filePath, url, token) {
+    console.log(`\nStarting upload to ${url}...`);
+    try {
+        const fileContent = fs.readFileSync(filePath); // Read as buffer
+        const fileName = path.basename(filePath);
+        const blob = new Blob([fileContent], { type: 'application/json' });
+        const formData = new FormData();
+        formData.append('configId', 'ShopifyOrdersWebhook');
+        formData.append('contentFile', blob, fileName);
+
+        const headers = {};
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`; // Or Basic, depending on requirements. Defaulting to Bearer or just passing the token.
+            // If token contains 'Basic ', use it as is.
+            if (!token.startsWith('Basic ') && !token.startsWith('Bearer ')) {
+                headers['Authorization'] = `Bearer ${token}`;
+            } else {
+                headers['Authorization'] = token;
+            }
+        }
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: formData
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Upload failed with status ${response.status}: ${errorText}`);
+        }
+
+        const result = await response.json(); // Assuming JSON response
+        console.log("Upload successful!", result);
+
+    } catch (error) {
+        console.error("Upload Error:", error.message);
+    }
 }
 
 function replicateOrder(orderData, uniqueMap, iterationIndex) {
@@ -88,10 +133,8 @@ function replicateOrder(orderData, uniqueMap, iterationIndex) {
 
         if (obj.name && typeof obj.name === 'string') {
             if (obj.name.startsWith('#')) {
-                const randomSuffix = Math.floor(Math.random() * 10000);
-                // Prevent infinite appending by taking only the base name (first part before '-')
-                const baseName = obj.name.split('-')[0];
-                obj.name = `${baseName}-${iterationIndex}-${randomSuffix}`;
+                const randomSuffix = Math.floor(Math.random() * 10);
+                obj.name = `${obj.name}${randomSuffix}`;
             }
         }
 
@@ -137,6 +180,14 @@ try {
     console.log(`Generated ${finalExecutionList.length} total payloads.`);
     console.log(`(Source had ${inputSequence.length} steps, replicated ${totalOrders} times)`);
     console.log(`Saved to ${outputFile}`);
+
+    if (shouldUpload) {
+        if (!MOQUI_URL) {
+            console.error("Error: MOQUI_URL is not configured in the script. Please update the hardcoded constant.");
+        } else {
+            uploadToMoqui(outputFile, MOQUI_URL, MOQUI_TOKEN);
+        }
+    }
 
 } catch (e) {
     console.error("Error:", e.message);

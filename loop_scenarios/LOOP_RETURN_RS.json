@@ -1,0 +1,497 @@
+[
+    {
+        "payload": {
+            "note": "LOOP_RETURN_RS",
+            "refundAgreements": [
+                {
+                    "__typename": "OrderAgreement"
+                }
+            ],
+            "statusPageUrl": "https://krewe-sunglasses.myshopify.com/2369929/orders/5885e93390aad64d32601deb026c7c26/authenticate?key=9e658952c81b282a21dd7bdf3ee3ab8f",
+            "refunds": [],
+            "lineItems": [
+                {
+                    "quantity": 1,
+                    "isGiftCard": false,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "ADELE | Poppy",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": false,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "ADELE | Poppy",
+                    "variant": {
+                        "legacyResourceId": "44099491791048",
+                        "id": "gid://shopify/ProductVariant/44099491791048",
+                        "title": "Default Title",
+                        "sku": "42643",
+                        "barcode": "850058134048"
+                    },
+                    "fulfillmentService": {
+                        "serviceName": "Manual"
+                    },
+                    "id": "gid://shopify/LineItem/35201913717104",
+                    "sku": "42643",
+                    "currentQuantity": 1,
+                    "taxLines": [],
+                    "customAttributes": []
+                },
+                {
+                    "quantity": 1,
+                    "isGiftCard": false,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "LISBON | Matte Sunday Tortoise",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "315.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "315.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": false,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "315.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "315.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "LISBON | Matte Sunday Tortoise",
+                    "variant": {
+                        "legacyResourceId": "51843720937840",
+                        "id": "gid://shopify/ProductVariant/51843720937840",
+                        "title": "Default Title",
+                        "sku": "34109",
+                        "barcode": "850058134109"
+                    },
+                    "fulfillmentService": {
+                        "serviceName": "Manual"
+                    },
+                    "id": "gid://shopify/LineItem/35201913749872",
+                    "sku": "34109",
+                    "currentQuantity": 1,
+                    "taxLines": [],
+                    "customAttributes": []
+                }
+            ],
+            "number": 38623,
+            "createdAt": "2026-02-05T15:12:21Z",
+            "totalPriceSet": {
+                "shopMoney": {
+                    "amount": "570.0",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "570.0",
+                    "currencyCode": "USD"
+                }
+            },
+            "legacyResourceId": "11899470446960",
+            "id": "gid://shopify/Order/11899470446960",
+            "closedAt": null,
+            "retailLocation": null,
+            "email": "chinmay.sharma@gmail.com",
+            "discountCodes": [],
+            "shippingLines": [],
+            "presentmentCurrencyCode": "USD",
+            "cancelledAt": null,
+            "discountApplications": [],
+            "currentTotalPriceSet": {
+                "shopMoney": {
+                    "amount": "570.0",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "570.0",
+                    "currencyCode": "USD"
+                }
+            },
+            "transactions": [
+                {
+                    "receiptJson": "{}",
+                    "settlementCurrency": null,
+                    "kind": "SALE",
+                    "amountSet": {
+                        "shopMoney": {
+                            "amount": "570.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "570.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "parentTransaction": null,
+                    "id": "gid://shopify/OrderTransaction/13205572026736",
+                    "paymentDetails": null,
+                    "gateway": "",
+                    "status": "SUCCESS"
+                }
+            ],
+            "tags": [
+                "Web order (Basic)"
+            ],
+            "customerLocale": null,
+            "displayFulfillmentStatus": "FULFILLED",
+            "phone": null,
+            "name": "#KREWE38623",
+            "shippingAddress": {
+                "zip": "10001",
+                "country": "United States",
+                "address2": null,
+                "city": "Alamagordo",
+                "phone": "15754794701",
+                "address1": "2200 Tinker Loop",
+                "provinceCode": "NY",
+                "latitude": 40.75368539999999,
+                "name": "John Doe",
+                "countryCodeV2": "US",
+                "longitude": -73.9991637
+            },
+            "sourceName": "318839062529",
+            "billingAddress": null,
+            "currencyCode": "USD",
+            "customer": {
+                "firstName": "Chinmay",
+                "lastName": "Sharma",
+                "defaultEmailAddress": {
+                    "emailAddress": "chinmay.sharma@gmail.com"
+                },
+                "defaultPhoneNumber": null,
+                "legacyResourceId": "23056527622512",
+                "id": "gid://shopify/Customer/23056527622512"
+            },
+            "customAttributes": []
+        }
+    },
+    {
+        "payload": {
+            "note": "LOOP_RETURN_RS",
+            "refundAgreements": [
+                {
+                    "__typename": "OrderAgreement"
+                },
+                {
+                    "app": {
+                        "id": "gid://shopify/App/1662707",
+                        "title": "Loop Returns & Exchanges"
+                    },
+                    "__typename": "RefundAgreement",
+                    "id": "gid://shopify/SalesAgreement/12204554092912",
+                    "refund": {
+                        "id": "gid://shopify/Refund/1071673966960"
+                    }
+                }
+            ],
+            "statusPageUrl": "https://krewe-sunglasses.myshopify.com/2369929/orders/5885e93390aad64d32601deb026c7c26/authenticate?key=9e658952c81b282a21dd7bdf3ee3ab8f",
+            "refunds": [
+                {
+                    "createdAt": "2026-02-05T15:16:16Z",
+                    "refundLineItems": [
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "255.0"
+                                }
+                            },
+                            "lineItem": {
+                                "quantity": 1,
+                                "isGiftCard": false,
+                                "variant": {
+                                    "id": "gid://shopify/ProductVariant/44099491791048"
+                                },
+                                "unfulfilledQuantity": 0,
+                                "discountAllocations": [],
+                                "id": "gid://shopify/LineItem/35201913717104",
+                                "sku": "42643",
+                                "taxLines": []
+                            },
+                            "quantity": 1,
+                            "subtotalSet": {
+                                "shopMoney": {
+                                    "amount": "255.0"
+                                }
+                            },
+                            "location": {
+                                "id": "gid://shopify/Location/68167762120"
+                            },
+                            "id": "gid://shopify/RefundLineItem/723008323952",
+                            "restockType": "NO_RESTOCK",
+                            "totalTaxSet": {
+                                "shopMoney": {
+                                    "amount": "0.0"
+                                }
+                            }
+                        }
+                    ],
+                    "refundShippingLines": [],
+                    "id": "gid://shopify/Refund/1071673966960",
+                    "orderAdjustments": [],
+                    "transactions": [
+                        {
+                            "parentTransaction": {
+                                "id": "gid://shopify/OrderTransaction/13205572026736"
+                            },
+                            "amountSet": {
+                                "shopMoney": {
+                                    "amount": "255.0"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "255.0",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "kind": "REFUND",
+                            "id": "gid://shopify/OrderTransaction/13205578809712",
+                            "paymentDetails": null,
+                            "gateway": "",
+                            "status": "SUCCESS"
+                        }
+                    ],
+                    "totalRefundedSet": {
+                        "shopMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "return": null
+                }
+            ],
+            "lineItems": [
+                {
+                    "quantity": 1,
+                    "isGiftCard": false,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "ADELE | Poppy",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": false,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "ADELE | Poppy",
+                    "variant": {
+                        "legacyResourceId": "44099491791048",
+                        "id": "gid://shopify/ProductVariant/44099491791048",
+                        "title": "Default Title",
+                        "sku": "42643",
+                        "barcode": "850058134048"
+                    },
+                    "fulfillmentService": {
+                        "serviceName": "Manual"
+                    },
+                    "id": "gid://shopify/LineItem/35201913717104",
+                    "sku": "42643",
+                    "currentQuantity": 0,
+                    "taxLines": [],
+                    "customAttributes": []
+                },
+                {
+                    "quantity": 1,
+                    "isGiftCard": false,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "LISBON | Matte Sunday Tortoise",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "315.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "315.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": false,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "315.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "315.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "LISBON | Matte Sunday Tortoise",
+                    "variant": {
+                        "legacyResourceId": "51843720937840",
+                        "id": "gid://shopify/ProductVariant/51843720937840",
+                        "title": "Default Title",
+                        "sku": "34109",
+                        "barcode": "850058134109"
+                    },
+                    "fulfillmentService": {
+                        "serviceName": "Manual"
+                    },
+                    "id": "gid://shopify/LineItem/35201913749872",
+                    "sku": "34109",
+                    "currentQuantity": 1,
+                    "taxLines": [],
+                    "customAttributes": []
+                }
+            ],
+            "number": 38623,
+            "createdAt": "2026-02-05T15:12:21Z",
+            "totalPriceSet": {
+                "shopMoney": {
+                    "amount": "570.0",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "570.0",
+                    "currencyCode": "USD"
+                }
+            },
+            "legacyResourceId": "11899470446960",
+            "id": "gid://shopify/Order/11899470446960",
+            "closedAt": null,
+            "retailLocation": null,
+            "email": "chinmay.sharma@gmail.com",
+            "discountCodes": [],
+            "shippingLines": [],
+            "presentmentCurrencyCode": "USD",
+            "cancelledAt": null,
+            "discountApplications": [],
+            "currentTotalPriceSet": {
+                "shopMoney": {
+                    "amount": "315.0",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "315.0",
+                    "currencyCode": "USD"
+                }
+            },
+            "transactions": [
+                {
+                    "receiptJson": "{}",
+                    "settlementCurrency": null,
+                    "kind": "SALE",
+                    "amountSet": {
+                        "shopMoney": {
+                            "amount": "570.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "570.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "parentTransaction": null,
+                    "id": "gid://shopify/OrderTransaction/13205572026736",
+                    "paymentDetails": null,
+                    "gateway": "",
+                    "status": "SUCCESS"
+                },
+                {
+                    "receiptJson": "{}",
+                    "settlementCurrency": null,
+                    "kind": "REFUND",
+                    "amountSet": {
+                        "shopMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "255.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "parentTransaction": {
+                        "id": "gid://shopify/OrderTransaction/13205572026736",
+                        "paymentDetails": null
+                    },
+                    "id": "gid://shopify/OrderTransaction/13205578809712",
+                    "paymentDetails": null,
+                    "gateway": "",
+                    "status": "SUCCESS"
+                }
+            ],
+            "tags": [
+                "Refund",
+                "Web order (Basic)"
+            ],
+            "customerLocale": null,
+            "displayFulfillmentStatus": "FULFILLED",
+            "phone": null,
+            "name": "#KREWE38623",
+            "shippingAddress": {
+                "zip": "10001",
+                "country": "United States",
+                "address2": null,
+                "city": "Alamagordo",
+                "phone": "15754794701",
+                "address1": "2200 Tinker Loop",
+                "provinceCode": "NY",
+                "latitude": 40.75368539999999,
+                "name": "John Doe",
+                "countryCodeV2": "US",
+                "longitude": -73.9991637
+            },
+            "sourceName": "318839062529",
+            "billingAddress": null,
+            "currencyCode": "USD",
+            "customer": {
+                "firstName": "Chinmay",
+                "lastName": "Sharma",
+                "defaultEmailAddress": {
+                    "emailAddress": "chinmay.sharma@gmail.com"
+                },
+                "defaultPhoneNumber": null,
+                "legacyResourceId": "23056527622512",
+                "id": "gid://shopify/Customer/23056527622512"
+            },
+            "customAttributes": []
+        }
+    }
+]

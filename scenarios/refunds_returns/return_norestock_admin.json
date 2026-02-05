@@ -1,0 +1,49 @@
+[
+    {
+        "scenarioName": "Web order, Normal Return With NO_RESTOCK by Admin",
+        "tags": [
+            "return_norestock_admin"
+        ],
+        "lineItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 2,
+                "price": 255
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 2
+            }
+        ],
+        "actionType": "RETURN",
+        "refundItems": [
+            {
+                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "quantity": 2,
+                "restockType": "NO_RESTOCK",
+                "reason": "Damaged"
+            }
+        ],
+        "restockType": "NO_RESTOCK",
+        "customerId": "gid://shopify/Customer/23056527622512",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "11 W 31st St",
+            "city": "New York",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        },
+        "shippingLines": [
+            {
+                "title": "Standard Shipping",
+                "price": 10.00,
+                "code": "Standard"
+            }
+        ]
+    }
+]

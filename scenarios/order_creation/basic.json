@@ -1,11 +1,19 @@
 [
     {
         "scenarioName": "Web order (Basic)",
+        "tags": [
+            "Web order (Basic)"
+        ],
         "lineItems": [
             {
                 "variantId": "gid://shopify/ProductVariant/44099491791048",
                 "quantity": 1,
                 "price": 255
+            },
+            {
+                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "quantity": 1,
+                "price": 315
             }
         ],
         "isFulfilled": false,

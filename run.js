@@ -85,8 +85,8 @@ let currentOrderId = null;
 
         for (let i = 0; i < scenarios.length; i++) {
             if (i > 0) {
-                console.log('Waiting 60 seconds before next iteration...');
-                await new Promise(resolve => setTimeout(resolve, 60000));
+                console.log('Waiting 20 seconds before next iteration...');
+                await new Promise(resolve => setTimeout(resolve, 20000));
             }
             await runNewman([scenarios[i]]);
         }
