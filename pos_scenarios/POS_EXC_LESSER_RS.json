@@ -1,0 +1,662 @@
+[
+    {
+        "payload": {
+            "note": "POS EXC LESSER RS",
+            "refundAgreements": [
+                {
+                    "__typename": "OrderAgreement"
+                }
+            ],
+            "statusPageUrl": "https://krewe-sunglasses.myshopify.com/2369929/orders/b2b68eb82c201e72ae39b287ffd2aabf/authenticate?key=81959e6ad55b10a5bbc1b826c1fffc5d",
+            "refunds": [],
+            "lineItems": [
+                {
+                    "quantity": 1,
+                    "isGiftCard": false,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "AUSTIN | 18K Titanium + Champagne Polarized",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "415.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "415.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": true,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "415.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "415.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "AUSTIN | 18K Titanium + Champagne Polarized",
+                    "variant": {
+                        "legacyResourceId": "51843721167216",
+                        "id": "gid://shopify/ProductVariant/51843721167216",
+                        "title": "Default Title",
+                        "sku": "08229",
+                        "barcode": "852479008229"
+                    },
+                    "fulfillmentService": {
+                        "serviceName": "Manual"
+                    },
+                    "id": "gid://shopify/LineItem/35201302561136",
+                    "sku": "08229",
+                    "currentQuantity": 1,
+                    "taxLines": [
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "20.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "20.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Louisiana State Tax"
+                        },
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "20.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "20.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Orleans County Tax"
+                        }
+                    ],
+                    "customAttributes": []
+                }
+            ],
+            "number": 38604,
+            "createdAt": "2026-02-05T07:33:32Z",
+            "totalPriceSet": {
+                "shopMoney": {
+                    "amount": "456.5",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "456.5",
+                    "currencyCode": "USD"
+                }
+            },
+            "legacyResourceId": "11899138244976",
+            "id": "gid://shopify/Order/11899138244976",
+            "closedAt": null,
+            "retailLocation": {
+                "legacyResourceId": "68167762120",
+                "id": "gid://shopify/Location/68167762120"
+            },
+            "email": "chinmay.sharma@hotwax.co",
+            "discountCodes": [],
+            "shippingLines": [],
+            "presentmentCurrencyCode": "USD",
+            "cancelledAt": null,
+            "discountApplications": [],
+            "currentTotalPriceSet": {
+                "shopMoney": {
+                    "amount": "456.5",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "456.5",
+                    "currencyCode": "USD"
+                }
+            },
+            "transactions": [
+                {
+                    "receiptJson": "{}",
+                    "settlementCurrency": null,
+                    "kind": "SALE",
+                    "amountSet": {
+                        "shopMoney": {
+                            "amount": "456.5",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "456.5",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "parentTransaction": null,
+                    "id": "gid://shopify/OrderTransaction/13205151514992",
+                    "paymentDetails": null,
+                    "gateway": "cash",
+                    "status": "SUCCESS"
+                }
+            ],
+            "tags": [],
+            "customerLocale": "en-US",
+            "displayFulfillmentStatus": "FULFILLED",
+            "phone": null,
+            "name": "#KREWE38604",
+            "shippingAddress": null,
+            "sourceName": "pos",
+            "billingAddress": null,
+            "currencyCode": "USD",
+            "customer": {
+                "firstName": "Chinmay",
+                "lastName": "Sharma",
+                "defaultEmailAddress": {
+                    "emailAddress": "chinmay.sharma@hotwax.co"
+                },
+                "defaultPhoneNumber": null,
+                "legacyResourceId": "7428839866568",
+                "id": "gid://shopify/Customer/7428839866568"
+            },
+            "customAttributes": []
+        }
+    },
+    {
+        "payload": {
+            "note": "POS EXC LESSER RS",
+            "refundAgreements": [
+                {
+                    "__typename": "OrderAgreement"
+                },
+                {
+                    "__typename": "ReturnAgreement"
+                },
+                {
+                    "app": {
+                        "id": "gid://shopify/App/129785",
+                        "title": "Point of Sale"
+                    },
+                    "__typename": "RefundAgreement",
+                    "id": "gid://shopify/SalesAgreement/12204197806448",
+                    "refund": {
+                        "id": "gid://shopify/Refund/1071655158128"
+                    }
+                }
+            ],
+            "statusPageUrl": "https://krewe-sunglasses.myshopify.com/2369929/orders/b2b68eb82c201e72ae39b287ffd2aabf/authenticate?key=81959e6ad55b10a5bbc1b826c1fffc5d",
+            "refunds": [
+                {
+                    "createdAt": "2026-02-05T07:36:43Z",
+                    "refundLineItems": [
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "415.0"
+                                }
+                            },
+                            "lineItem": {
+                                "quantity": 1,
+                                "isGiftCard": false,
+                                "variant": {
+                                    "id": "gid://shopify/ProductVariant/51843721167216"
+                                },
+                                "unfulfilledQuantity": 0,
+                                "discountAllocations": [],
+                                "id": "gid://shopify/LineItem/35201302561136",
+                                "sku": "08229",
+                                "taxLines": [
+                                    {
+                                        "priceSet": {
+                                            "shopMoney": {
+                                                "amount": "20.75"
+                                            }
+                                        },
+                                        "rate": 0.05,
+                                        "title": "Louisiana State Tax"
+                                    },
+                                    {
+                                        "priceSet": {
+                                            "shopMoney": {
+                                                "amount": "20.75"
+                                            }
+                                        },
+                                        "rate": 0.05,
+                                        "title": "Orleans County Tax"
+                                    }
+                                ]
+                            },
+                            "quantity": 1,
+                            "subtotalSet": {
+                                "shopMoney": {
+                                    "amount": "415.0"
+                                }
+                            },
+                            "location": {
+                                "id": "gid://shopify/Location/68167762120"
+                            },
+                            "id": "gid://shopify/RefundLineItem/722984403312",
+                            "restockType": "RETURN",
+                            "totalTaxSet": {
+                                "shopMoney": {
+                                    "amount": "41.5"
+                                }
+                            }
+                        }
+                    ],
+                    "refundShippingLines": [],
+                    "id": "gid://shopify/Refund/1071655158128",
+                    "orderAdjustments": [],
+                    "transactions": [
+                        {
+                            "parentTransaction": {
+                                "id": "gid://shopify/OrderTransaction/13205151514992"
+                            },
+                            "amountSet": {
+                                "shopMoney": {
+                                    "amount": "132.0"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "132.0",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "kind": "REFUND",
+                            "id": "gid://shopify/OrderTransaction/13205153677680",
+                            "paymentDetails": null,
+                            "gateway": "cash",
+                            "status": "SUCCESS"
+                        }
+                    ],
+                    "totalRefundedSet": {
+                        "shopMoney": {
+                            "amount": "132.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "return": {
+                        "createdAt": "2026-02-05T07:36:42Z",
+                        "returnLineItems": [
+                            {
+                                "quantity": 1,
+                                "returnReason": "COLOR",
+                                "id": "gid://shopify/ReturnLineItem/70637846896",
+                                "fulfillmentLineItem": {
+                                    "lineItem": {
+                                        "id": "gid://shopify/LineItem/35201302561136"
+                                    }
+                                }
+                            }
+                        ],
+                        "exchangeLineItems": [
+                            {
+                                "lineItems": [
+                                    {
+                                        "variantTitle": null,
+                                        "product": {
+                                            "id": "gid://shopify/Product/8056833048776",
+                                            "title": "BRIGITTE | Fernet"
+                                        },
+                                        "quantity": 1,
+                                        "isGiftCard": false,
+                                        "originalTotalSet": {
+                                            "presentmentMoney": {
+                                                "amount": "295.0",
+                                                "currencyCode": "USD"
+                                            }
+                                        },
+                                        "discountAllocations": [],
+                                        "discountedTotalSet": {
+                                            "presentmentMoney": {
+                                                "amount": "295.0",
+                                                "currencyCode": "USD"
+                                            }
+                                        },
+                                        "discountedUnitPriceSet": {
+                                            "presentmentMoney": {
+                                                "amount": "295.0",
+                                                "currencyCode": "USD"
+                                            }
+                                        },
+                                        "originalUnitPriceSet": {
+                                            "presentmentMoney": {
+                                                "amount": "295.0",
+                                                "currencyCode": "USD"
+                                            }
+                                        },
+                                        "discountedUnitPriceAfterAllDiscountsSet": {
+                                            "presentmentMoney": {
+                                                "amount": "295.0",
+                                                "currencyCode": "USD"
+                                            }
+                                        },
+                                        "variant": {
+                                            "id": "gid://shopify/ProductVariant/44099494150344",
+                                            "sku": "41016"
+                                        },
+                                        "id": "gid://shopify/LineItem/35201305084272",
+                                        "sku": "41016",
+                                        "taxLines": [
+                                            {
+                                                "priceSet": {
+                                                    "presentmentMoney": {
+                                                        "amount": "14.75",
+                                                        "currencyCode": "USD"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "priceSet": {
+                                                    "presentmentMoney": {
+                                                        "amount": "14.75",
+                                                        "currencyCode": "USD"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "quantity": 1,
+                                "id": "gid://shopify/ExchangeLineItem/645071216"
+                            }
+                        ],
+                        "id": "gid://shopify/Return/42246308208",
+                        "transactions": [
+                            {
+                                "kind": "REFUND",
+                                "amountSet": {
+                                    "shopMoney": {
+                                        "amount": "132.0",
+                                        "currencyCode": "USD"
+                                    },
+                                    "presentmentMoney": {
+                                        "amount": "132.0",
+                                        "currencyCode": "USD"
+                                    }
+                                },
+                                "processedAt": "2026-02-05T07:36:43Z",
+                                "id": "gid://shopify/OrderTransaction/13205153677680",
+                                "paymentDetails": null,
+                                "gateway": "cash",
+                                "status": "SUCCESS"
+                            }
+                        ],
+                        "status": "CLOSED",
+                        "reverseFulfillmentOrders": [
+                            {
+                                "lineItems": [
+                                    {
+                                        "dispositions": [
+                                            {
+                                                "location": {
+                                                    "legacyResourceId": "68167762120"
+                                                },
+                                                "id": "gid://shopify/ReverseFulfillmentOrderDisposition/10307862896"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "id": "gid://shopify/ReverseFulfillmentOrder/41934618992"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "lineItems": [
+                {
+                    "quantity": 1,
+                    "isGiftCard": false,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "AUSTIN | 18K Titanium + Champagne Polarized",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "415.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "415.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": true,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "415.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "415.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "AUSTIN | 18K Titanium + Champagne Polarized",
+                    "variant": {
+                        "legacyResourceId": "51843721167216",
+                        "id": "gid://shopify/ProductVariant/51843721167216",
+                        "title": "Default Title",
+                        "sku": "08229",
+                        "barcode": "852479008229"
+                    },
+                    "fulfillmentService": {
+                        "serviceName": "Manual"
+                    },
+                    "id": "gid://shopify/LineItem/35201302561136",
+                    "sku": "08229",
+                    "currentQuantity": 0,
+                    "taxLines": [
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "20.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "20.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Louisiana State Tax"
+                        },
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "20.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "20.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Orleans County Tax"
+                        }
+                    ],
+                    "customAttributes": []
+                },
+                {
+                    "quantity": 1,
+                    "isGiftCard": false,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "BRIGITTE | Fernet",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": true,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "BRIGITTE | Fernet",
+                    "variant": {
+                        "legacyResourceId": "44099494150344",
+                        "id": "gid://shopify/ProductVariant/44099494150344",
+                        "title": "Default Title",
+                        "sku": "41016",
+                        "barcode": "810062129218"
+                    },
+                    "fulfillmentService": {
+                        "serviceName": "Manual"
+                    },
+                    "id": "gid://shopify/LineItem/35201305084272",
+                    "sku": "41016",
+                    "currentQuantity": 1,
+                    "taxLines": [
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Louisiana State Tax"
+                        },
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Orleans County Tax"
+                        }
+                    ],
+                    "customAttributes": []
+                }
+            ],
+            "number": 38604,
+            "createdAt": "2026-02-05T07:33:32Z",
+            "totalPriceSet": {
+                "shopMoney": {
+                    "amount": "781.0",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "781.0",
+                    "currencyCode": "USD"
+                }
+            },
+            "legacyResourceId": "11899138244976",
+            "id": "gid://shopify/Order/11899138244976",
+            "closedAt": null,
+            "retailLocation": {
+                "legacyResourceId": "68167762120",
+                "id": "gid://shopify/Location/68167762120"
+            },
+            "email": "chinmay.sharma@hotwax.co",
+            "discountCodes": [],
+            "shippingLines": [],
+            "presentmentCurrencyCode": "USD",
+            "cancelledAt": null,
+            "discountApplications": [],
+            "currentTotalPriceSet": {
+                "shopMoney": {
+                    "amount": "324.5",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "324.5",
+                    "currencyCode": "USD"
+                }
+            },
+            "transactions": [
+                {
+                    "receiptJson": "{}",
+                    "settlementCurrency": null,
+                    "kind": "SALE",
+                    "amountSet": {
+                        "shopMoney": {
+                            "amount": "456.5",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "456.5",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "parentTransaction": null,
+                    "id": "gid://shopify/OrderTransaction/13205151514992",
+                    "paymentDetails": null,
+                    "gateway": "cash",
+                    "status": "SUCCESS"
+                },
+                {
+                    "receiptJson": "{}",
+                    "settlementCurrency": null,
+                    "kind": "REFUND",
+                    "amountSet": {
+                        "shopMoney": {
+                            "amount": "132.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "132.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "parentTransaction": {
+                        "id": "gid://shopify/OrderTransaction/13205151514992",
+                        "paymentDetails": null
+                    },
+                    "id": "gid://shopify/OrderTransaction/13205153677680",
+                    "paymentDetails": null,
+                    "gateway": "cash",
+                    "status": "SUCCESS"
+                }
+            ],
+            "tags": [],
+            "customerLocale": "en-US",
+            "displayFulfillmentStatus": "FULFILLED",
+            "phone": null,
+            "name": "#KREWE38604",
+            "shippingAddress": null,
+            "sourceName": "pos",
+            "billingAddress": null,
+            "currencyCode": "USD",
+            "customer": {
+                "firstName": "Chinmay",
+                "lastName": "Sharma",
+                "defaultEmailAddress": {
+                    "emailAddress": "chinmay.sharma@hotwax.co"
+                },
+                "defaultPhoneNumber": null,
+                "legacyResourceId": "7428839866568",
+                "id": "gid://shopify/Customer/7428839866568"
+            },
+            "customAttributes": []
+        }
+    }
+]

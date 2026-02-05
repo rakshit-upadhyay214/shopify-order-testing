@@ -1,0 +1,461 @@
+[
+    {
+        "payload": {
+            "note": "POS RFD WEB RS",
+            "refundAgreements": [
+                {
+                    "__typename": "OrderAgreement"
+                }
+            ],
+            "statusPageUrl": "https://krewe-sunglasses.myshopify.com/2369929/orders/e88331ce7e1f9c66b12de8a055fd29d9/authenticate?key=4455bb89dd6b3a4686e03cfaa17d7ffb",
+            "refunds": [],
+            "lineItems": [
+                {
+                    "quantity": 1,
+                    "isGiftCard": false,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "BRIGITTE | Fernet",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": true,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "BRIGITTE | Fernet",
+                    "variant": {
+                        "legacyResourceId": "44099494150344",
+                        "id": "gid://shopify/ProductVariant/44099494150344",
+                        "title": "Default Title",
+                        "sku": "41016",
+                        "barcode": "810062129218"
+                    },
+                    "fulfillmentService": {
+                        "serviceName": "Manual"
+                    },
+                    "id": "gid://shopify/LineItem/35201282933104",
+                    "sku": "41016",
+                    "currentQuantity": 1,
+                    "taxLines": [
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Louisiana State Tax"
+                        },
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Orleans County Tax"
+                        }
+                    ],
+                    "customAttributes": []
+                }
+            ],
+            "number": 38601,
+            "createdAt": "2026-02-05T07:16:20Z",
+            "totalPriceSet": {
+                "shopMoney": {
+                    "amount": "324.5",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "324.5",
+                    "currencyCode": "USD"
+                }
+            },
+            "legacyResourceId": "11899127628144",
+            "id": "gid://shopify/Order/11899127628144",
+            "closedAt": null,
+            "retailLocation": {
+                "legacyResourceId": "68167762120",
+                "id": "gid://shopify/Location/68167762120"
+            },
+            "email": "chinmay.sharma@gmail.com",
+            "discountCodes": [],
+            "shippingLines": [],
+            "presentmentCurrencyCode": "USD",
+            "cancelledAt": null,
+            "discountApplications": [],
+            "currentTotalPriceSet": {
+                "shopMoney": {
+                    "amount": "324.5",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "324.5",
+                    "currencyCode": "USD"
+                }
+            },
+            "transactions": [
+                {
+                    "receiptJson": "{}",
+                    "settlementCurrency": null,
+                    "kind": "SALE",
+                    "amountSet": {
+                        "shopMoney": {
+                            "amount": "324.5",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "324.5",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "parentTransaction": null,
+                    "id": "gid://shopify/OrderTransaction/13205137752432",
+                    "paymentDetails": null,
+                    "gateway": "cash",
+                    "status": "SUCCESS"
+                }
+            ],
+            "tags": [],
+            "customerLocale": "en-IN",
+            "displayFulfillmentStatus": "FULFILLED",
+            "phone": null,
+            "name": "#KREWE38601",
+            "shippingAddress": null,
+            "sourceName": "pos",
+            "billingAddress": null,
+            "currencyCode": "USD",
+            "customer": {
+                "firstName": "Chinmay",
+                "lastName": "Sharma",
+                "defaultEmailAddress": {
+                    "emailAddress": "chinmay.sharma@gmail.com"
+                },
+                "defaultPhoneNumber": null,
+                "legacyResourceId": "23056527622512",
+                "id": "gid://shopify/Customer/23056527622512"
+            },
+            "customAttributes": []
+        }
+    },
+    {
+        "payload": {
+            "note": "POS RFD WEB RS",
+            "refundAgreements": [
+                {
+                    "__typename": "OrderAgreement"
+                },
+                {
+                    "app": {
+                        "id": "gid://shopify/App/1830279",
+                        "title": "Shopify Web"
+                    },
+                    "__typename": "RefundAgreement",
+                    "id": "gid://shopify/SalesAgreement/12204188434800",
+                    "refund": {
+                        "id": "gid://shopify/Refund/1071654928752"
+                    }
+                }
+            ],
+            "statusPageUrl": "https://krewe-sunglasses.myshopify.com/2369929/orders/e88331ce7e1f9c66b12de8a055fd29d9/authenticate?key=4455bb89dd6b3a4686e03cfaa17d7ffb",
+            "refunds": [
+                {
+                    "createdAt": "2026-02-05T07:21:36Z",
+                    "refundLineItems": [
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "295.0"
+                                }
+                            },
+                            "lineItem": {
+                                "quantity": 1,
+                                "isGiftCard": false,
+                                "variant": {
+                                    "id": "gid://shopify/ProductVariant/44099494150344"
+                                },
+                                "unfulfilledQuantity": 0,
+                                "discountAllocations": [],
+                                "id": "gid://shopify/LineItem/35201282933104",
+                                "sku": "41016",
+                                "taxLines": [
+                                    {
+                                        "priceSet": {
+                                            "shopMoney": {
+                                                "amount": "14.75"
+                                            }
+                                        },
+                                        "rate": 0.05,
+                                        "title": "Louisiana State Tax"
+                                    },
+                                    {
+                                        "priceSet": {
+                                            "shopMoney": {
+                                                "amount": "14.75"
+                                            }
+                                        },
+                                        "rate": 0.05,
+                                        "title": "Orleans County Tax"
+                                    }
+                                ]
+                            },
+                            "quantity": 1,
+                            "subtotalSet": {
+                                "shopMoney": {
+                                    "amount": "295.0"
+                                }
+                            },
+                            "location": {
+                                "id": "gid://shopify/Location/68167762120"
+                            },
+                            "id": "gid://shopify/RefundLineItem/722984206704",
+                            "restockType": "RETURN",
+                            "totalTaxSet": {
+                                "shopMoney": {
+                                    "amount": "29.5"
+                                }
+                            }
+                        }
+                    ],
+                    "refundShippingLines": [],
+                    "id": "gid://shopify/Refund/1071654928752",
+                    "orderAdjustments": [],
+                    "transactions": [
+                        {
+                            "parentTransaction": {
+                                "id": "gid://shopify/OrderTransaction/13205137752432"
+                            },
+                            "amountSet": {
+                                "shopMoney": {
+                                    "amount": "324.5"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "324.5",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "kind": "REFUND",
+                            "id": "gid://shopify/OrderTransaction/13205142045040",
+                            "paymentDetails": null,
+                            "gateway": "cash",
+                            "status": "SUCCESS"
+                        }
+                    ],
+                    "totalRefundedSet": {
+                        "shopMoney": {
+                            "amount": "324.5",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "return": null
+                }
+            ],
+            "lineItems": [
+                {
+                    "quantity": 1,
+                    "isGiftCard": false,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "BRIGITTE | Fernet",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": true,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "BRIGITTE | Fernet",
+                    "variant": {
+                        "legacyResourceId": "44099494150344",
+                        "id": "gid://shopify/ProductVariant/44099494150344",
+                        "title": "Default Title",
+                        "sku": "41016",
+                        "barcode": "810062129218"
+                    },
+                    "fulfillmentService": {
+                        "serviceName": "Manual"
+                    },
+                    "id": "gid://shopify/LineItem/35201282933104",
+                    "sku": "41016",
+                    "currentQuantity": 0,
+                    "taxLines": [
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Louisiana State Tax"
+                        },
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Orleans County Tax"
+                        }
+                    ],
+                    "customAttributes": []
+                }
+            ],
+            "number": 38601,
+            "createdAt": "2026-02-05T07:16:20Z",
+            "totalPriceSet": {
+                "shopMoney": {
+                    "amount": "324.5",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "324.5",
+                    "currencyCode": "USD"
+                }
+            },
+            "legacyResourceId": "11899127628144",
+            "id": "gid://shopify/Order/11899127628144",
+            "closedAt": null,
+            "retailLocation": {
+                "legacyResourceId": "68167762120",
+                "id": "gid://shopify/Location/68167762120"
+            },
+            "email": "chinmay.sharma@gmail.com",
+            "discountCodes": [],
+            "shippingLines": [],
+            "presentmentCurrencyCode": "USD",
+            "cancelledAt": null,
+            "discountApplications": [],
+            "currentTotalPriceSet": {
+                "shopMoney": {
+                    "amount": "0.0",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "0.0",
+                    "currencyCode": "USD"
+                }
+            },
+            "transactions": [
+                {
+                    "receiptJson": "{}",
+                    "settlementCurrency": null,
+                    "kind": "SALE",
+                    "amountSet": {
+                        "shopMoney": {
+                            "amount": "324.5",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "324.5",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "parentTransaction": null,
+                    "id": "gid://shopify/OrderTransaction/13205137752432",
+                    "paymentDetails": null,
+                    "gateway": "cash",
+                    "status": "SUCCESS"
+                },
+                {
+                    "receiptJson": "{}",
+                    "settlementCurrency": null,
+                    "kind": "REFUND",
+                    "amountSet": {
+                        "shopMoney": {
+                            "amount": "324.5",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "324.5",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "parentTransaction": {
+                        "id": "gid://shopify/OrderTransaction/13205137752432",
+                        "paymentDetails": null
+                    },
+                    "id": "gid://shopify/OrderTransaction/13205142045040",
+                    "paymentDetails": null,
+                    "gateway": "cash",
+                    "status": "SUCCESS"
+                }
+            ],
+            "tags": [
+                "POS RFD WEB RS"
+            ],
+            "customerLocale": "en-IN",
+            "displayFulfillmentStatus": "FULFILLED",
+            "phone": null,
+            "name": "#KREWE38601",
+            "shippingAddress": null,
+            "sourceName": "pos",
+            "billingAddress": null,
+            "currencyCode": "USD",
+            "customer": {
+                "firstName": "Chinmay",
+                "lastName": "Sharma",
+                "defaultEmailAddress": {
+                    "emailAddress": "chinmay.sharma@gmail.com"
+                },
+                "defaultPhoneNumber": null,
+                "legacyResourceId": "23056527622512",
+                "id": "gid://shopify/Customer/23056527622512"
+            },
+            "customAttributes": []
+        }
+    }
+]

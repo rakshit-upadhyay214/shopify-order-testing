@@ -1,0 +1,237 @@
+[
+    {
+        "payload": {
+            "note": "POS GFT RTN NRS",
+            "refundAgreements": [
+                {
+                    "__typename": "OrderAgreement"
+                }
+            ],
+            "statusPageUrl": "https://krewe-sunglasses.myshopify.com/2369929/orders/d03a1e464d26d9354611f864b4b79d5d/authenticate?key=63354d24f045c2d745eb3bdc381d7717",
+            "refunds": [],
+            "lineItems": [
+                {
+                    "quantity": 1,
+                    "isGiftCard": true,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "KREWE GIFT CARD",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "62.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "62.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": false,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "62.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "62.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "KREWE GIFT CARD - KREWE GIFT CARD",
+                    "variant": null,
+                    "fulfillmentService": {
+                        "serviceName": "Gift Card"
+                    },
+                    "id": "gid://shopify/LineItem/35201411383664",
+                    "sku": null,
+                    "currentQuantity": 1,
+                    "taxLines": [
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "0.0",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "0.0",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Louisiana State Tax"
+                        },
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "0.0",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "0.0",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Orleans County Tax"
+                        }
+                    ],
+                    "customAttributes": []
+                },
+                {
+                    "quantity": 1,
+                    "isGiftCard": false,
+                    "__typename": "LineItem",
+                    "unfulfilledQuantity": 0,
+                    "discountAllocations": [],
+                    "title": "JOSEPHINE | Mambo 24K",
+                    "discountedUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "requiresShipping": true,
+                    "originalUnitPriceSet": {
+                        "shopMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "295.0",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "nonFulfillableQuantity": 0,
+                    "name": "JOSEPHINE | Mambo 24K - Mirrored / Cat Eye / Mambo",
+                    "variant": {
+                        "legacyResourceId": "11994605185",
+                        "id": "gid://shopify/ProductVariant/11994605185",
+                        "title": "Mirrored / Cat Eye / Mambo",
+                        "sku": "21-03M",
+                        "barcode": ""
+                    },
+                    "fulfillmentService": {
+                        "serviceName": "Manual"
+                    },
+                    "id": "gid://shopify/LineItem/35201411416432",
+                    "sku": "21-03M",
+                    "currentQuantity": 1,
+                    "taxLines": [
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Louisiana State Tax"
+                        },
+                        {
+                            "priceSet": {
+                                "shopMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                },
+                                "presentmentMoney": {
+                                    "amount": "14.75",
+                                    "currencyCode": "USD"
+                                }
+                            },
+                            "rate": 0.05,
+                            "title": "Orleans County Tax"
+                        }
+                    ],
+                    "customAttributes": []
+                }
+            ],
+            "number": 38610,
+            "createdAt": "2026-02-05T09:13:48Z",
+            "totalPriceSet": {
+                "shopMoney": {
+                    "amount": "386.5",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "386.5",
+                    "currencyCode": "USD"
+                }
+            },
+            "legacyResourceId": "11899197915504",
+            "id": "gid://shopify/Order/11899197915504",
+            "closedAt": null,
+            "retailLocation": {
+                "legacyResourceId": "68167762120",
+                "id": "gid://shopify/Location/68167762120"
+            },
+            "email": "ajinkyamoghe2@gmail.com",
+            "discountCodes": [],
+            "shippingLines": [],
+            "presentmentCurrencyCode": "USD",
+            "cancelledAt": null,
+            "discountApplications": [],
+            "currentTotalPriceSet": {
+                "shopMoney": {
+                    "amount": "386.5",
+                    "currencyCode": "USD"
+                },
+                "presentmentMoney": {
+                    "amount": "386.5",
+                    "currencyCode": "USD"
+                }
+            },
+            "transactions": [
+                {
+                    "receiptJson": "{}",
+                    "settlementCurrency": null,
+                    "kind": "SALE",
+                    "amountSet": {
+                        "shopMoney": {
+                            "amount": "386.5",
+                            "currencyCode": "USD"
+                        },
+                        "presentmentMoney": {
+                            "amount": "386.5",
+                            "currencyCode": "USD"
+                        }
+                    },
+                    "parentTransaction": null,
+                    "id": "gid://shopify/OrderTransaction/13205230420336",
+                    "paymentDetails": null,
+                    "gateway": "cash",
+                    "status": "SUCCESS"
+                }
+            ],
+            "tags": [],
+            "customerLocale": "en",
+            "displayFulfillmentStatus": "FULFILLED",
+            "phone": null,
+            "name": "#KREWE38610",
+            "shippingAddress": null,
+            "sourceName": "pos",
+            "billingAddress": null,
+            "currencyCode": "USD",
+            "customer": {
+                "firstName": "Ajinkya",
+                "lastName": "Moghe",
+                "defaultEmailAddress": {
+                    "emailAddress": "ajinkyamoghe2@gmail.com"
+                },
+                "defaultPhoneNumber": null,
+                "legacyResourceId": "7703698604232",
+                "id": "gid://shopify/Customer/7703698604232"
+            },
+            "customAttributes": []
+        }
+    }
+]
