@@ -68,6 +68,32 @@ Run the scenarios 3 times in a row
 node run.js --collection "OrderAndRefunds.postman_collection.json" --scenario "scenarios/order_creation/basic.json" --iterations 3
 ```
 
+## Order Replication
+
+The `replicate_orders.js` script allows you to generate bulk test data by replicating an existing order JSON scenario multiple times. It ensures unique IDs, proper timestamps, and can simulate complex flows like Create -> Exchange -> Return.
+
+### Command Syntax
+```bash
+node replicate_orders.js --input <Input JSON File> --count <Number of Copies>
+```
+
+### Options
+- `--input` (or `-i`): **Required**. Path to the source JSON file containing the order payload(s).
+- `--count` (or `-n`): Optional. Number of times to replicate the order sequence. Defaults to 1.
+
+### Features
+- **Unique IDs**: Automatically replaces `id`, `legacyResourceId`, and other identifier fields with unique, consistent values across related steps (e.g., preserving distinct Order IDs across a 'Create' and subsequent 'Exchange' step).
+- **Format Preservation**: Maintains the `gid://shopify/...` format.
+- **Name Handling**: Updates the `number` and `name` fields to be unique (e.g., `#KREWE1234-1-5839`).
+- **Metadata**: Injects `"shopId": "SHOP"` into each payload.
+- **Output**: Saves the generated file to `replicated_orders/` with a timestamped filename.
+
+### Example
+To create 5 copies of the `POS_EXC_EQUAL_RS` scenario:
+```bash
+node replicate_orders.js --input pos_scenarios/POS_EXC_EQUAL_RS.json --count 5
+```
+
 ## Output
 
 After a successful run:
