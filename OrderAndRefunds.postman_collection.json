@@ -771,7 +771,7 @@
               "            const returnItem = {",
               "                fulfillmentLineItemId: fulfillmentLineItemId,",
               "                quantity: item.quantity,",
-              "                returnReason: 'NOT_AS_DESCRIBED'",
+              "                returnReason: item.reason || 'NOT_AS_DESCRIBED'",
               "            };",
               "            if (item.restockingFeePercentage) {",
               "                returnItem.restockingFee = {",

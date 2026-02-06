@@ -1,8 +1,8 @@
 [
     {
-        "scenarioName": "Web order, Return with Restocking Fees",
+        "scenarioName": "Web order, Unfulfilled Order Cancelled Refunded No Restock",
         "tags": [
-            "WEB_RTN_FEE_RS"
+            "WEB_UNF_RFD_CNL_NRS"
         ],
         "lineItems": [
             {
@@ -11,23 +11,18 @@
                 "price": 315
             }
         ],
-        "fulfillmentItems": [
-            {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
-                "quantity": 1
-            }
-        ],
-        "actionType": "RETURN",
-        "refundItems": [
-            {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
-                "quantity": 1,
-                "restockType": "RETURN",
-                "restockingFeePercentage": 15,
-                "reason": "UNWANTED"
-            }
-        ],
-        "restockType": "RETURN",
+        "fulfillmentItems": [],
+        "actionType": "FULL_CANCEL",
+        "orderCancellation": true,
+        "netCancelParams": {
+            "restock": false,
+            "reason": "CUSTOMER",
+            "staffNote": "Customer changed mind (No Restock)",
+            "refundMethod": {
+                "originalPaymentMethodsRefund": true
+            },
+            "notifyCustomer": true
+        },
         "customerId": "gid://shopify/Customer/23056527622512",
         "shippingAddress": {
             "firstName": "Chinmay",

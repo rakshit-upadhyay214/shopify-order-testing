@@ -23,9 +23,12 @@
                 "variantId": "gid://shopify/ProductVariant/44099491791048",
                 "quantity": 2,
                 "restockType": "NO_RESTOCK",
-                "reason": "Damaged"
+                "reason": "DEFECTIVE"
             }
         ],
+        "shippingRefund": {
+            "amount": 10.00
+        },
         "restockType": "NO_RESTOCK",
         "customerId": "gid://shopify/Customer/23056527622512",
         "shippingAddress": {

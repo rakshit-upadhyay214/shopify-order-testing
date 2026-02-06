@@ -23,7 +23,7 @@
                 "variantId": "gid://shopify/ProductVariant/44099491791048",
                 "quantity": 2,
                 "restockType": "RETURN",
-                "reason": "Customer changed mind"
+                "reason": "UNWANTED"
             }
         ],
         "restockType": "RETURN",
