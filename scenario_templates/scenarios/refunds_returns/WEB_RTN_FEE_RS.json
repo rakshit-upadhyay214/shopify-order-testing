@@ -1,34 +1,34 @@
 [
     {
-        "scenarioName": "Web order, Partially fulfilled",
+        "scenarioName": "Web order, Return with Restocking Fees",
         "tags": [
-            "WEB_ORD_PART_FUL"
+            "WEB_RTN_FEE_RS"
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
-                "quantity": 2
-            },
-            {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
-                "quantity": 1
+                "variantId": "{{VARIANT_2}}",
+                "quantity": 1,
+                "price": "{{PRICE_2}}"
             }
         ],
-        "isFulfilled": true,
         "fulfillmentItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1
             }
         ],
+        "actionType": "RETURN",
         "refundItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1,
-                "restockType": "RESTOCK"
+                "restockType": "RETURN",
+                "restockingFeePercentage": 15,
+                "reason": "UNWANTED"
             }
         ],
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "restockType": "RETURN",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",

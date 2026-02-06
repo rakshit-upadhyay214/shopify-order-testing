@@ -1,0 +1,35 @@
+[
+    {
+        "scenarioName": "Web order, Unfulfilled Item canceled by Admin, Refunded No Restock",
+        "tags": [
+            "WEB_UNF_ITEM_CNL_NRS"
+        ],
+        "lineItems": [
+            {
+                "variantId": "{{VARIANT_2}}",
+                "quantity": 2,
+                "price": "{{PRICE_2}}"
+            }
+        ],
+        "fulfillmentItems": [],
+        "actionType": "REFUND",
+        "refundItems": [
+            {
+                "variantId": "{{VARIANT_2}}",
+                "quantity": 1,
+                "restockType": "NO_RESTOCK"
+            }
+        ],
+        "customerId": "{{CUSTOMER_1}}",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    }
+]

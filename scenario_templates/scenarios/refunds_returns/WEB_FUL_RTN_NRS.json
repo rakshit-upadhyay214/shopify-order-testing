@@ -1,0 +1,52 @@
+[
+    {
+        "scenarioName": "Web order, Normal Return With NO_RESTOCK by Admin",
+        "tags": [
+            "WEB_FUL_RTN_NRS"
+        ],
+        "lineItems": [
+            {
+                "variantId": "{{VARIANT_1}}",
+                "quantity": 2,
+                "price": "{{PRICE_1}}"
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "{{VARIANT_1}}",
+                "quantity": 2
+            }
+        ],
+        "actionType": "RETURN",
+        "refundItems": [
+            {
+                "variantId": "{{VARIANT_1}}",
+                "quantity": 2,
+                "restockType": "NO_RESTOCK",
+                "reason": "DEFECTIVE"
+            }
+        ],
+        "shippingRefund": {
+            "amount": 10
+        },
+        "restockType": "NO_RESTOCK",
+        "customerId": "{{CUSTOMER_1}}",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "11 W 31st St",
+            "city": "New York",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        },
+        "shippingLines": [
+            {
+                "title": "Standard Shipping",
+                "price": 10,
+                "code": "Standard"
+            }
+        ]
+    }
+]

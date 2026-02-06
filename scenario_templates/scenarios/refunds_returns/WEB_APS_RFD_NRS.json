@@ -1,0 +1,30 @@
+[
+    {
+        "scenarioName": "Web order, Appeasement Refund (No Line Items)",
+        "tags": [
+            "WEB_APS_RFD_NRS"
+        ],
+        "lineItems": [
+            {
+                "variantId": "{{VARIANT_1}}",
+                "quantity": 1,
+                "price": "{{PRICE_1}}"
+            }
+        ],
+        "fulfillmentItems": [],
+        "actionType": "REFUND",
+        "appeasementAmount": 25,
+        "restockType": "NO_RESTOCK",
+        "customerId": "{{CUSTOMER_1}}",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    }
+]

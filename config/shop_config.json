@@ -1,0 +1,15 @@
+{
+    "shopName": "krewe-sunglasses",
+    "accessToken": "",
+    "mappings": {
+        "{{CUSTOMER_1}}": "gid://shopify/Customer/23056527622512",
+        "{{VARIANT_1}}": "gid://shopify/ProductVariant/44099491791048",
+        "{{PRICE_1}}": 255,
+        "{{VARIANT_2}}": "gid://shopify/ProductVariant/51843720937840",
+        "{{PRICE_2}}": 315,
+        "{{VARIANT_3}}": "gid://shopify/ProductVariant/8056803983560",
+        "{{PRICE_3}}": 295,
+        "{{VARIANT_4}}": "gid://shopify/ProductVariant/8056832426184",
+        "{{PRICE_4}}": 255
+    }
+}
