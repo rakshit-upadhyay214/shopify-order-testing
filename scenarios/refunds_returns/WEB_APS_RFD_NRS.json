@@ -1,25 +1,20 @@
 [
     {
-        "scenarioName": "Web order, Unfulfilled Order Cancelled (With Restock)",
+        "scenarioName": "Web order, Appeasement Refund (No Line Items)",
+        "tags": [
+            "WEB_APS_RFD_NRS"
+        ],
         "lineItems": [
             {
                 "variantId": "gid://shopify/ProductVariant/44099491791048",
-                "quantity": 2,
+                "quantity": 1,
                 "price": 255
             }
         ],
         "fulfillmentItems": [],
-        "actionType": "FULL_CANCEL",
-        "orderCancellation": true,
-        "netCancelParams": {
-            "restock": true,
-            "reason": "CUSTOMER",
-            "staffNote": "Customer changed mind (With Restock)",
-            "refundMethod": {
-                "originalPaymentMethodsRefund": true
-            },
-            "notifyCustomer": true
-        },
+        "actionType": "REFUND",
+        "appeasementAmount": 25,
+        "restockType": "NO_RESTOCK",
         "customerId": "gid://shopify/Customer/23056527622512",
         "shippingAddress": {
             "firstName": "Chinmay",

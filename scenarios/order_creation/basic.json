@@ -1,8 +1,9 @@
 [
     {
-        "scenarioName": "Web order (Basic)",
+        "scenarioName": "Web order (Basic with Tax & Discount)",
         "tags": [
-            "Web order (Basic)"
+            "Tax",
+            "Discount"
         ],
         "lineItems": [
             {
@@ -13,7 +14,25 @@
             {
                 "variantId": "gid://shopify/ProductVariant/51843720937840",
                 "quantity": 1,
-                "price": 315
+                "price": 315,
+                "appliedDiscounts": [
+                    {
+                        "title": "Loyalty Discount",
+                        "amount": 15.00
+                    }
+                ]
+            }
+        ],
+        "discountCode": {
+            "code": "WELCOME10",
+            "type": "percentage",
+            "amount": 10
+        },
+        "taxLines": [
+            {
+                "title": "State Tax",
+                "rate": 0.06,
+                "price": 34.20
             }
         ],
         "isFulfilled": false,
@@ -28,6 +47,7 @@
             "country": "United States",
             "zip": "10001",
             "phone": "15754794701"
-        }
+        },
+        "taxesIncluded": false
     }
 ]

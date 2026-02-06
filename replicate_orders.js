@@ -133,8 +133,8 @@ function replicateOrder(orderData, uniqueMap, iterationIndex) {
 
         if (obj.name && typeof obj.name === 'string') {
             if (obj.name.startsWith('#')) {
-                const randomSuffix = Math.floor(Math.random() * 10);
-                obj.name = `${obj.name}${randomSuffix}`;
+                const randomSuffix = Math.floor(Math.random() * 100);
+                obj.name = `${obj.name}-${randomSuffix}`;
             }
         }
 

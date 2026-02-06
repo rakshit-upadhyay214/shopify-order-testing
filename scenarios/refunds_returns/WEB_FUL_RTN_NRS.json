@@ -2,7 +2,7 @@
     {
         "scenarioName": "Web order, Normal Return With NO_RESTOCK by Admin",
         "tags": [
-            "return_norestock_admin"
+            "WEB_FUL_RTN_NRS"
         ],
         "lineItems": [
             {

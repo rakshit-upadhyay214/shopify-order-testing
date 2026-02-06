@@ -1,6 +1,9 @@
 [
     {
         "scenarioName": "Web order, Unfulfilled Order Cancelled (No Restock)",
+        "tags": [
+            "WEB_UNF_CNL_NRS"
+        ],
         "lineItems": [
             {
                 "variantId": "gid://shopify/ProductVariant/51843720937840",

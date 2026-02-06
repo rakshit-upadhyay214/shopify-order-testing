@@ -1,39 +1,30 @@
 [
     {
-        "scenarioName": "Web order, Mixed Cancel and Refund (With Restock)",
+        "scenarioName": "Web order, Return with Restocking Fees",
+        "tags": [
+            "WEB_RTN_FEE_RS"
+        ],
         "lineItems": [
             {
                 "variantId": "gid://shopify/ProductVariant/51843720937840",
                 "quantity": 1,
-                "price": 295
-            },
-            {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
-                "quantity": 1,
-                "price": 255
+                "price": 315
             }
         ],
         "fulfillmentItems": [
             {
                 "variantId": "gid://shopify/ProductVariant/51843720937840",
                 "quantity": 1
-            },
-            {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
-                "quantity": 0
             }
         ],
-        "actionType": "REFUND",
+        "actionType": "RETURN",
         "refundItems": [
             {
                 "variantId": "gid://shopify/ProductVariant/51843720937840",
                 "quantity": 1,
-                "restockType": "RETURN"
-            },
-            {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
-                "quantity": 1,
-                "restockType": "CANCEL"
+                "restockType": "RETURN",
+                "restockingFeePercentage": 15,
+                "reason": "Customer remorse"
             }
         ],
         "restockType": "RETURN",
