@@ -6,16 +6,16 @@
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_1}}",
                 "quantity": 1,
-                "price": 255
+                "price": "{{PRICE_1}}"
             }
         ],
         "fulfillmentItems": [],
         "actionType": "REFUND",
         "appeasementAmount": 25,
         "restockType": "NO_RESTOCK",
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",
@@ -34,27 +34,27 @@
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1,
-                "price": 315
+                "price": "{{PRICE_2}}"
             }
         ],
         "fulfillmentItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1
             }
         ],
         "actionType": "REFUND",
         "refundItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1,
                 "restockType": "NO_RESTOCK"
             }
         ],
         "restockType": "NO_RESTOCK",
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",
@@ -73,21 +73,21 @@
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_1}}",
                 "quantity": 2,
-                "price": 255
+                "price": "{{PRICE_1}}"
             }
         ],
         "fulfillmentItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_1}}",
                 "quantity": 2
             }
         ],
         "actionType": "RETURN",
         "refundItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_1}}",
                 "quantity": 2,
                 "restockType": "NO_RESTOCK",
                 "reason": "DEFECTIVE"
@@ -97,7 +97,7 @@
             "amount": 10
         },
         "restockType": "NO_RESTOCK",
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",
@@ -123,28 +123,28 @@
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_1}}",
                 "quantity": 2,
-                "price": 255
+                "price": "{{PRICE_1}}"
             }
         ],
         "fulfillmentItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_1}}",
                 "quantity": 2
             }
         ],
         "actionType": "RETURN",
         "refundItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_1}}",
                 "quantity": 2,
                 "restockType": "RETURN",
                 "reason": "UNWANTED"
             }
         ],
         "restockType": "RETURN",
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",
@@ -163,29 +163,29 @@
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_1}}",
                 "quantity": 2
             },
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1
             }
         ],
         "isFulfilled": true,
         "fulfillmentItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_1}}",
                 "quantity": 1
             }
         ],
         "refundItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1,
                 "restockType": "RESTOCK"
             }
         ],
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",
@@ -204,21 +204,21 @@
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1,
-                "price": 315
+                "price": "{{PRICE_2}}"
             }
         ],
         "fulfillmentItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1
             }
         ],
         "actionType": "RETURN",
         "refundItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1,
                 "restockType": "RETURN",
                 "restockingFeePercentage": 15,
@@ -226,7 +226,7 @@
             }
         ],
         "restockType": "RETURN",
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",
@@ -245,9 +245,9 @@
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1,
-                "price": 315
+                "price": "{{PRICE_2}}"
             }
         ],
         "fulfillmentItems": [],
@@ -262,7 +262,7 @@
             },
             "notifyCustomer": true
         },
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",
@@ -281,21 +281,21 @@
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 2,
-                "price": 315
+                "price": "{{PRICE_2}}"
             }
         ],
         "fulfillmentItems": [],
         "actionType": "REFUND",
         "refundItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1,
                 "restockType": "NO_RESTOCK"
             }
         ],
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",
@@ -314,9 +314,9 @@
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/44099491791048",
+                "variantId": "{{VARIANT_1}}",
                 "quantity": 2,
-                "price": 255
+                "price": "{{PRICE_1}}"
             }
         ],
         "fulfillmentItems": [],
@@ -331,7 +331,7 @@
             },
             "notifyCustomer": true
         },
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",
@@ -350,9 +350,9 @@
         ],
         "lineItems": [
             {
-                "variantId": "gid://shopify/ProductVariant/51843720937840",
+                "variantId": "{{VARIANT_2}}",
                 "quantity": 1,
-                "price": 315
+                "price": "{{PRICE_2}}"
             }
         ],
         "fulfillmentItems": [],
@@ -367,7 +367,7 @@
             },
             "notifyCustomer": true
         },
-        "customerId": "gid://shopify/Customer/23056527622512",
+        "customerId": "{{CUSTOMER_1}}",
         "shippingAddress": {
             "firstName": "Chinmay",
             "lastName": "Sharma",

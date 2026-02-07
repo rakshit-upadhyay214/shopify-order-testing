@@ -5,7 +5,7 @@ let inputFile = null;
 let totalOrders = 1;
 let shouldUpload = false;
 const MOQUI_URL = "https://krewe-maarg-uat.hotwax.io/rest/s1/admin/uploadDataManagerFile";
-const MOQUI_TOKEN = "Bearer ";
+const MOQUI_TOKEN = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyTG9naW5JZCI6InNob3BpZnkuaW50ZWdyYXRpb24iLCJwdXJwb3NlIjoidGVzdCIsImlzc3VlZEJ5IjoiSG90d2F4IFVzZXIiLCJpc3MiOiJrcmV3ZS11YXQiLCJleHAiOjE3NzI4OTk1MTQsImNhdGVnb3J5IjoiSU5URUdSQVRJT04iLCJpYXQiOjE3NzAzMDc1MTR9.sd4tsfCdw9OcQup1zXzVtwliAfh1ai28jK23KXvyKUpc1dsHO6kVMnE5ygjEm-R-wP0rA_AFwjbcf_25WxCccA";
 
 const args = process.argv.slice(2);
 for (let i = 0; i < args.length; i++) {

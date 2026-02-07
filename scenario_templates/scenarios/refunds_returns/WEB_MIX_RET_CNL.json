@@ -1,0 +1,67 @@
+[
+    {
+        "scenarioName": "Web Order, Mixed: Return Fulfilled Item, Cancel Unfulfilled Item, and Refund Shipping",
+        "tags": [
+            "WEB_MIX_RET_CNL"
+        ],
+        "lineItems": [
+            {
+                "variantId": "{{VARIANT_1}}",
+                "quantity": 1,
+                "price": "{{PRICE_1}}"
+            },
+            {
+                "variantId": "{{VARIANT_2}}",
+                "quantity": 1,
+                "price": "{{PRICE_2}}"
+            },
+            {
+                "variantId": "{{VARIANT_5}}",
+                "quantity": 1,
+                "price": "{{PRICE_5}}"
+            }
+        ],
+        "fulfillmentItems": [
+            {
+                "variantId": "{{VARIANT_1}}",
+                "quantity": 1
+            }
+        ],
+        "actionType": "REFUND",
+        "refundItems": [
+            {
+                "variantId": "{{VARIANT_1}}",
+                "quantity": 1,
+                "restockType": "RETURN",
+                "reason": "NOT_AS_DESCRIBED"
+            },
+            {
+                "variantId": "{{VARIANT_2}}",
+                "quantity": 1,
+                "restockType": "CANCEL",
+                "reason": "CUSTOMER_REQUESTED"
+            }
+        ],
+        "shippingLines": [
+            {
+                "title": "Express Shipping",
+                "price": 15,
+                "code": "Express"
+            }
+        ],
+        "shippingRefund": {
+            "amount": 15
+        },
+        "customerId": "{{CUSTOMER_1}}",
+        "shippingAddress": {
+            "firstName": "Chinmay",
+            "lastName": "Sharma",
+            "address1": "11 W 31st St",
+            "city": "New York",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        }
+    }
+]

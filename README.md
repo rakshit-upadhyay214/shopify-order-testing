@@ -1,101 +1,101 @@
 # Shopify Order Testing Automation
 
-This repository provides an automated way to test Shopify Order creation and management flows using Postman Collections and Newman. It allows you to simulate complex order scenarios (Draft Orders, standard Orders, Refunds) with varied setups for discounts, shipping, and taxes, and then validates the results against your Shopify store.
+This repository provides an automated system for testing Shopify order flows, returns, and refunds. It uses a template-based approach to generate consistent test data across different Shopify stores and manages execution via two distinct methodologies.
 
-## Prerequisites
+---
 
-- **Node.js**: Ensure Node.js is installed.
-- **Newman**: The command-line collection runner for Postman.
-  ```bash
-  npm install
-  ```
-  (Or install globally: `npm install -g newman`)
+## 🧪 Testing Methodologies
 
-## Setup
+There are two primary ways to create test data in this system:
 
-### 1. Configure Environment (`shopify_env.json`)
-You must update the `shopify_env.json` file with your target Shopify store's credentials.
-**Note:** Do not commit this file with real credentials if pushing to a public repository.
+### 1. Live Shopify Order Creation (Web Scenarios)
+*   **Goal**: Create real orders, returns, and refunds on your Shopify store via the Admin API.
+*   **Source**: Files in the `scenarios/` directory.
+*   **Tool**: `run.js` (uses Postman Collections + Newman).
+*   **Workflow**: Creates a live order -> Validates against store state -> Downloads the resulting JSON.
 
-Open `shopify_env.json` and set the following values:
-- **`shopName`**: The subdomain of your Shopify store (e.g., `krewe-sunglasses` for `krewe-sunglasses.myshopify.com`).
-- **`accessToken`**: Your Admin API access token (starts with `shpat_...`).
-- **`apiVersion`**: The Admin API version to use (e.g., `2024-01`).
+### 2. Direct Payload Replication (POS Scenarios)
+*   **Goal**: Simulate bulk order data by replicating existing JSON payloads directly.
+*   **Source**: Files in the `pos_scenarios/` directory.
+*   **Tool**: `replicate_orders.js`.
+*   **Workflow**: Takes a "perfect" POS JSON -> Generates $N$ unique copies with randomized IDs -> Uploads/Saves them for downstream system testing (like Moqui).
 
-### 2. Configure Scenarios
-Scenario files can be found in the `scenarios/` directory (e.g., `scenarios/refunds_returns/partially_fulfilled.json`). These JSON files define the data used for each test run.
+---
 
-**CRITICAL: Update Variant IDs**
-The scenario files contain `variantId` fields (e.g., `gid://shopify/ProductVariant/123456789`).
-- You **MUST** update these IDs to match valid, actively available product variants in your specific Shopify store.
-- If the variant IDs do not exist in your store, the order creation will fail.
+## 🚀 Quick Start for New Shops (e.g., `gorjana-sandbox`)
 
-**Update Customer Information**
-The scenario files rely on customer data to associate orders with users.
-- Ensure the `email` or `customerId` fields in the scenario files correspond to valid customers in your store or are unique if creating new ones.
+If you are setting this up for a new Shopify store, follow these steps:
 
-## Usage
-
-Use the `run.js` script to execute a Postman collection with a specific scenario file.
-
-### Command Syntax
+### 1. Clone & Install
 ```bash
-node run.js --collection "<Collection Filename>" --scenario "<Path to Scenario JSON>"
+git clone <repository-url>
+cd shopify-order-testing
+npm install
 ```
 
-### Examples
+### 2. Configure Shop Settings
+Open `config/shop_config.json` and update it with your store's details:
+*   **`shopName`**: Your Shopify store subdomain (e.g., `gorjana-sandbox`).
+*   **`accessToken`**: Your Shopify Admin API access token.
+*   **`mappings`**: Update the Variant IDs and Prices to match active products in your store.
+    *   Find valid `variantId`s in Shopify Admin and paste them into `{{VARIANT_1}}`, `{{VARIANT_2}}`, etc.
+    *   Update `{{CUSTOMER_1}}` with a valid Customer GID.
 
-**1. Create a Draft Order**
-This uses the *DraftOrderCreation* collection to create a draft order, verify it, and complete it to create a real order.
+### 3. Generate Scenario Files
+Run the update script to propagate your config changes into all scenario files. This reads the **Templates** and generates the actual test files.
 ```bash
-node run.js --collection "DraftOrderCreation.postman_collection.json" --scenario "scenarios/draft_order_creation/mixed_discounts.json"
+node scripts/update_scenarios.js
 ```
 
-**2. Standard Order Creation & Refunds**
-Use this to test standard order creation flows or sync processes, including refunds.
+### 4. Run your first test
 ```bash
-node run.js --collection "OrderAndRefunds.postman_collection.json" --scenario "scenarios/refunds_returns/return_restock_admin.json"
+# Method 1: Create a live order on Shopify
+node run.js --collection "OrderCreation.postman_collection.json" --scenario "scenarios/order_creation/basic.json"
 ```
 
-### Arguments
-- `--collection` (or `-c`): The path to the Postman collection file (e.g., `DraftOrderCreation.postman_collection.json`).
-- `--scenario` (or `-s`): The path to the scenario JSON file.
-- `--iterations` (or `-n`): (Optional) Number of times to run the full set of scenarios. Defaults to 1.
+---
 
-### 3. Run Multiple Iterations
-Run the scenarios 3 times in a row 
+## 🛠 Automation Tools
+
+### 1. Scenario Generator (`update_scenarios.js`)
+We do not edit files in the `scenarios/` or `pos_scenarios/` directories directly. Instead:
+*   **Source**: `scenario_templates/` contains JSON files with tokens like `{{VARIANT_1}}`.
+*   **Process**: `node scripts/update_scenarios.js` replaces tokens with values from `shop_config.json`.
+*   **Shuffle**: Use `--shuffle` to randomize which products are used in which scenarios.
+    ```bash
+    node scripts/update_scenarios.js --shuffle
+    ```
+
+### 2. Bulk Replicator (`replicate_orders.js`)
+Primarily used for **POS scenarios** to create volume for performance or sync testing.
 ```bash
-node run.js --collection "OrderAndRefunds.postman_collection.json" --scenario "scenarios/order_creation/basic.json" --iterations 3
+node replicate_orders.js --input pos_scenarios/POS_EXC_EQUAL_RS.json --count 50
 ```
 
-## Order Replication
+---
 
-The `replicate_orders.js` script allows you to generate bulk test data by replicating an existing order JSON scenario multiple times. It ensures unique IDs, proper timestamps, and can simulate complex flows like Create -> Exchange -> Return.
+## 📖 Usage Guide & Collections
 
-### Command Syntax
-```bash
-node replicate_orders.js --input <Input JSON File> --count <Number of Copies>
-```
+### Live Execution (`run.js`)
+**Arguments:**
+*   `--collection` (or `-c`): The Postman collection name.
+*   `--scenario` (or `-s`): The path to the scenario JSON (from the `scenarios/` folder).
 
-### Options
-- `--input` (or `-i`): **Required**. Path to the source JSON file containing the order payload(s).
-- `--count` (or `-n`): Optional. Number of times to replicate the order sequence. Defaults to 1.
+**Available Collections:**
+- `OrderCreation.postman_collection.json`: Standard web order flows.
+- `DraftOrderCreation.postman_collection.json`: Draft order to Order completion.
+- `OrderAndRefunds.postman_collection.json`: Complex refund and return processing.
 
-### Features
-- **Unique IDs**: Automatically replaces `id`, `legacyResourceId`, and other identifier fields with unique, consistent values across related steps (e.g., preserving distinct Order IDs across a 'Create' and subsequent 'Exchange' step).
-- **Format Preservation**: Maintains the `gid://shopify/...` format.
-- **Name Handling**: Updates the `number` and `name` fields to be unique (e.g., `#KREWE1234-1-5839`).
-- **Metadata**: Injects `"shopId": "SHOP"` into each payload.
-- **Output**: Saves the generated file to `replicated_orders/` with a timestamped filename.
+---
 
-### Example
-To create 5 copies of the `POS_EXC_EQUAL_RS` scenario:
-```bash
-node replicate_orders.js --input pos_scenarios/POS_EXC_EQUAL_RS.json --count 5
-```
+## 📂 Project Structure
 
-## Output
-
-After a successful run:
-1. **Orders**: The resulting Order JSON is automatically downloaded from Shopify and saved to the `orders/` directory (filename format: `<OrderID>.json`).
-2. **Snapshots**: GraphQL snapshots or other intermediate data are saved to the `snapshots/` directory.
+*   `config/`: Store-specific configuration (`shop_config.json`).
+*   `scenario_templates/`: The **Source of Truth** for all test cases.
+*   `scenarios/`: **(Generated)** Web order scenarios for live Shopify creation.
+*   `pos_scenarios/`: **(Generated)** POS order payloads for direct replication.
+*   `scripts/`: Automation scripts for generation and environment management.
+*   `shopify_env.json`: Postman environment settings (Auto-updated).
+*   `run.js`: The engine for live Shopify testing.
+*   `replicate_orders.js`: The engine for bulk payload replication.
+*   `orders/`: Downloaded JSON payloads of orders created during live tests.

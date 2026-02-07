@@ -1,0 +1,53 @@
+[
+    {
+        "scenarioName": "Web order (Basic with Tax & Discount)",
+        "tags": [
+            "Tax",
+            "Discount"
+        ],
+        "lineItems": [
+            {
+                "variantId": "{{VARIANT_1}}",
+                "quantity": 1,
+                "price": "{{PRICE_1}}"
+            },
+            {
+                "variantId": "{{VARIANT_2}}",
+                "quantity": 1,
+                "price": "{{PRICE_2}}",
+                "appliedDiscounts": [
+                    {
+                        "title": "Loyalty Discount",
+                        "amount": 15
+                    }
+                ]
+            }
+        ],
+        "discountCode": {
+            "code": "WELCOME10",
+            "type": "percentage",
+            "amount": 10
+        },
+        "taxLines": [
+            {
+                "title": "State Tax",
+                "rate": 0.06,
+                "price": 34.2
+            }
+        ],
+        "isFulfilled": false,
+        "fulfillmentItems": [],
+        "customerId": "{{CUSTOMER_1}}",
+        "shippingAddress": {
+            "firstName": "John",
+            "lastName": "Doe",
+            "address1": "2200 Tinker Loop",
+            "city": "Alamagordo",
+            "province": "New York",
+            "country": "United States",
+            "zip": "10001",
+            "phone": "15754794701"
+        },
+        "taxesIncluded": false
+    }
+]
