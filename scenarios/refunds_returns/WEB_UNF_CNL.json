@@ -1,6 +1,6 @@
 [
     {
-        "scenarioName": "Web order, Unfulfilled Order Cancelled (No Restock)",
+        "scenarioName": "Web order, Unfulfilled Order Cancelled",
         "tags": [
             "WEB_UNF_CNL_NRS"
         ],
@@ -17,7 +17,7 @@
         "netCancelParams": {
             "restock": false,
             "reason": "CUSTOMER",
-            "staffNote": "Customer changed mind (No Restock)",
+            "staffNote": "Customer changed mind",
             "refundMethod": {
                 "originalPaymentMethodsRefund": true
             },
