@@ -32,7 +32,7 @@ If the user's request requires a custom setup:
     *   **Crucial**: Use only the tokens verified in Phase 1.
     *   **CRITICAL RULE**: Do **NOT** include a `title` field in the `lineItems` objects unless explicitly requested by the user to override it. The automation system automatically fetches the correct product title from Shopify to ensure data integrity.
     *   Ensure `actionType` maps to the correct Postman flow (`REFUND`, `RETURN`, `FULL_CANCEL`).
-2.  **Save File**: Write the JSON to `scenario_templates/adhoc/[descriptive_name].json`.
+2.  **Save File**: Write the JSON to `scenario_templates/scenarios/adhoc/[descriptive_name].json`.
     *   *Naming Convention*: `adhoc/create_[N]_fulfill_[M]_refund_[K].json`.
 
 ### Phase 3: Synchronization
