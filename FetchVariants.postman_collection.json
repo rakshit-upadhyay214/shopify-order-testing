@@ -1,0 +1,75 @@
+{
+    "info": {
+        "name": "Fetch Variants (Setup)",
+        "description": "Fetch available product variants from Shopify to populate shop_config.json",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "GetProductVariants",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "const response = pm.response.json();",
+                            "if (response.data?.products?.edges) {",
+                            "    const variants = response.data.products.edges.map((edge, idx) => ({",
+                            "        num: idx + 1,",
+                            "        id: edge.node.variants.edges[0].node.id,",
+                            "        price: parseFloat(edge.node.variants.edges[0].node.price),",
+                            "        product: edge.node.title",
+                            "    }));",
+                            "    ",
+                            "    console.log('\\n Available Variants:\\n');",
+                            "    variants.forEach(v => console.log(`${v.num}. ${v.product} - $${v.price} - ${v.id}`));",
+                            "    ",
+                            "    console.log('\\n Config (copy to shop_config.json mappings):\\n');",
+                            "    variants.forEach((v, i) => {",
+                            "        console.log(`    \\\"{{VARIANT_${v.num}}}\\\": \\\"${v.id}\\\",`);",
+                            "        console.log(`    \\\"{{PRICE_${v.num}}}\\\": ${v.price}${i < variants.length - 1 ? ',' : ''}`);",
+                            "    });",
+                            "    console.log('');",
+                            "} else {",
+                            "    console.error('Failed to fetch variants');",
+                            "}"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "X-Shopify-Access-Token",
+                        "value": "{{accessToken}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "graphql",
+                    "graphql": {
+                        "query": "query GetProductVariants {\n  products(first: 6) {\n    edges {\n      node {\n        id\n        title\n        variants(first: 1) {\n          edges {\n            node {\n              id\n              title\n              price\n              displayName\n              inventoryQuantity\n            }\n          }\n        }\n      }\n    }\n  }\n}",
+                        "variables": ""
+                    }
+                },
+                "url": {
+                    "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+                    "protocol": "https",
+                    "host": [
+                        "{{shopName}}",
+                        "myshopify",
+                        "com"
+                    ],
+                    "path": [
+                        "admin",
+                        "api",
+                        "{{apiVersion}}",
+                        "graphql.json"
+                    ]
+                }
+            }
+        }
+    ]
+}

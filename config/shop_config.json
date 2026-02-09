@@ -7,9 +7,13 @@
         "{{PRICE_1}}": 255,
         "{{VARIANT_2}}": "gid://shopify/ProductVariant/51843720937840",
         "{{PRICE_2}}": 315,
-        "{{VARIANT_3}}": "gid://shopify/ProductVariant/8056803983560",
-        "{{PRICE_3}}": 295,
-        "{{VARIANT_4}}": "gid://shopify/ProductVariant/8056832426184",
-        "{{PRICE_4}}": 255
+        "{{VARIANT_3}}": "gid://shopify/ProductVariant/329231937",
+        "{{PRICE_3}}": 165,
+        "{{VARIANT_4}}": "gid://shopify/ProductVariant/329233559",
+        "{{PRICE_4}}": 165,
+        "{{VARIANT_5}}": "gid://shopify/ProductVariant/415171873",
+        "{{PRICE_5}}": 185,
+        "{{VARIANT_6}}": "gid://shopify/ProductVariant/329229847",
+        "{{PRICE_6}}": 145
     }
 }
