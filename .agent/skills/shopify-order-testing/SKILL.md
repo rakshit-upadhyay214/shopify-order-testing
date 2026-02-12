@@ -13,42 +13,27 @@ This skill automates the end-to-end testing user flow:
 1.  **Analyze Intent**: Parse user requests (e.g., "Order with 3 items, refund 2").
 2.  **Verify Config**: Check `config/shop_config.json` to confirm available valid tokens (e.g., `{{VARIANT_1}}`, `{{CUSTOMER_1}}`).
 3.  **Match/Create Scenario**: Locate a matching JSON template in `scenario_templates/` or create a new one using **only verified tokens**.
-4.  **Environment Sync**: Run `scripts/update_scenarios.js` to replace tokens with real data.
-5.  **Execute**: Run Postman collections via `newman` (using `run.js`) and report results.
+4.  **Execute**: Run Postman collections via `newman` (using `run.js`) and report results.
+
+5.  **Limitations**:
+    *   **NO POS ORDERS**: This skill **CANNOT** create Point of Sale (POS) order scenarios. It is strictly limited to Online Store / Draft Order creation flows via the Admin API. Do not attempt to generate scenarios for POS.
 
 ## Workflow Instructions
 When the user requests an order test, follow this strict process:
 
 ### Phase 0: Project Setup (One-Time or When Variants Change)
-**CRITICAL**: Before creating scenarios, ensure you have valid product variants from Shopify.
+**CRITICAL**: Before creating scenarios, ensure your environment is synced with live Shopify data.
 
-1.  **Fetch Available Variants**:
-    Run the FetchVariants collection using newman:
-    ```bash
-    newman run FetchVariants.postman_collection.json -e shopify_env.json
-    ```
-    This will:
-    - Query Shopify for available products and variants
-    - Display variant IDs, prices, product names, and inventory in the console output
-    - Provide ready-to-copy configuration format
+1.  **Execute Setup Logic**:
+    Use the `shopify-setup` skill instructions to fetch products and customers directly.
+    *   The Agent will query Shopify (via `curl` or API) for available products and variants.
+    *   The Agent will fetch active customers.
+    *   The Agent will manually update `config/shop_config.json` with `{{VARIANT_X}}`, `{{PRICE_X}}`, and `{{CUSTOMER_X}}` tokens.
     
-2.  **Update Configuration**:
-    - Review the newman console output which shows variants in this format:
-      ```
-      "{{VARIANT_X}}": "gid://shopify/ProductVariant/XXXXXXXXX",
-      "{{PRICE_X}}": XXX
-      ```
-    - Manually copy the variant mappings to `config/shop_config.json` under the `"mappings"` section
-    - Ensure you have at least 4-6 valid variants (VARIANT_1 through VARIANT_6)
-    
-3.  **Validate**:
-    - Verify that all variant IDs in `shop_config.json` are in the format: `"gid://shopify/ProductVariant/xxxxxxxxx"`
-    - Confirm prices are numeric values without currency symbols
+2.  **Verify Configuration**:
+    - Confirm `config/shop_config.json` contains populated mappings.
 
-**Note**: Run this phase whenever:
-- Setting up the project for the first time
-- Variant IDs become invalid (you'll see "Invalid global id" or "Title can't be blank" errors)
-- You need to test with different products
+**Note**: Perform this setup anytime you change target stores or if product data changes.
 
 ### Phase 1: Requirement Analysis & Verification
 1.  **Analyze the Request**: Identify key parameters (Action, Items, Fulfillment, Discounts).
@@ -78,6 +63,38 @@ When the user requests an order test, follow this strict process:
     *   Write the concrete JSON directly to: `scenarios/adhoc/[descriptive_name].json`.
     *   *Naming Convention*: `adhoc/create_[N]_items_[action]_[details].json`.
 
+### Phase 2a: Special Case Logic (Natural Language Rules)
+Apply these transformations based on specific user prompts:
+
+1.  **"Mixed Cart Order" / "Store Pickup"**:
+    *   Logic: Create a multi-item order where *one* item is for pickup and others are for shipping.
+    *   Implementation: Add a **Custom Attribute** to the specific pickup line item:
+        ```json
+        "customAttributes": [{ "key": "_pickupstore", "value": "<facility_id>" }]
+        ```
+    *   *Note*: `<facility_id>` should be a valid facility ID (e.g., from config or prompt).
+
+2.  **"Add Custom Attribute"**:
+    *   Add user-defined attributes to the specific `lineItem`.
+    *   Format: `[{ "key": "Field", "value": "Value" }]`.
+
+3.  **"Gift Card Item"**:
+    *   Include a line item representing a Gift Card. Ensure the `variantId` corresponds to a Gift Card product if available.
+
+4.  **Discounts**:
+    *   **Rule**: If the user asks for a discount (even if they say "item level"), apply it at the **ORDER LEVEL**.
+    *   Constraint: The API currently supports only order-level discounts.
+    *   Field: Use `discountCode` (singular object) at the root of the JSON object.
+    *   *Note*: The Shopify `orderCreate` mutation uses `discountCode`. explicit `appliedDiscount` is for Draft Orders. Verify which your collection uses, but `discountCode` is standard for Orders.
+
+5.  **Taxes**:
+    *   Handle requests for **Item Level** or **Order Level** taxes.
+    *   Structure: Add `taxLines` array to the `lineItem` or the order root/shipping lines as appropriate.
+
+6.  **Shipping Lines & Refunds**:
+    *   **Shipping Lines**: Add `shippingLines` array to the root if requested.
+    *   **Refund Logic**: If asked to refund shipping, **ALWAYS** refund the **WHOLE** shipping line charge at once. Do not perform partial shipping refunds.
+
 ### Phase 3: Verification
 1.  **Validate JSON**: Ensure the file contains no `{{}}` placeholders.
 2.  **Validate IDs**: Confirm all GIDs strictly follow the format `"gid://shopify/Resource/ID"`.
@@ -85,13 +102,12 @@ When the user requests an order test, follow this strict process:
 
 ### Phase 4: Execution & Reporting
 1.  **Select Collection**:
-    - **Order Creation Only**: `OrderCreation.postman_collection.json`
-    - **Complex Flows (Refunds/Returns)**: `OrderAndRefunds.postman_collection.json`
+    - **Single Comprehensive Collection**: `OrderAndRefunds.postman_collection.json` (Handles Creation, Fulfillment, Refunds, Returns)
 
 2.  **Execute with Newman**:
     Run newman directly with the scenario as iteration data:
     ```bash
-    newman run <collection>.postman_collection.json -e shopify_env.json -d <scenario-path>
+    newman run OrderAndRefunds.postman_collection.json -e shopify_env.json -d <scenario-path>
     ```
     Example:
     ```bash
@@ -145,6 +161,32 @@ Use this reference when building JSON files:
 | `actionType` | `FULL_CANCEL` | Calls `orderCancel`. |
 | `fulfillmentItems`| Array | `[{ "variantId": "{{VARIANT_1}}", "quantity": 1 }]` |
 | `refundItems` | Array | `[{ "variantId": "{{VARIANT_1}}", "quantity": 1, "restockType": "NO_RESTOCK" }]` |
+| `refundShipping` | Boolean | `true` (Refunds **FULL** shipping amount. Partial not supported.) |
+
+### Advanced Field Examples
+**Line Item with Attributes & Taxes:**
+```json
+{
+  "variantId": "{{VARIANT_1}}",
+  "quantity": 1,
+  "customAttributes": [
+    { "key": "_pickupstore", "value": "FACILITY_123" }
+  ],
+  "taxLines": [
+    { "title": "State Tax", "price": "1.50", "rate": 0.06 }
+  ]
+}
+```
+
+**Order Level Discount:**
+```json
+{
+  "discountCode": {
+    "code": "SUMMER_SALE",
+    "amount": "15.00"
+  }
+}
+```
 
 ## Tokens & Variables
 Always Check `config/shop_config.json` first. Common availability:
@@ -154,6 +196,6 @@ Always Check `config/shop_config.json` first. Common availability:
 - `{{LOCATION_ID}}`
 
 ## Troubleshooting
-- **Missing IDs**: If `scripts/update_scenarios.js` fails, check `config/shop_config.json`.
+- **Missing IDs**: If configuration is empty, run the `shopify-setup` logic.
 - **GraphQL Errors**: If Shopify API returns schema errors (e.g. `Field 'priceSet' doesn't exist`), check the `json` Request Body in the Postman collection and update the query.
 - **Inventory Errors**: If fulfillment fails, check if the item is tracked and has inventory at the `{{LOCATION_ID}}`.
