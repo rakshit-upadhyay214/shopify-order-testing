@@ -1,101 +1,104 @@
-# Shopify Order Testing Automation
+# Shopify Order Testing & Automation
 
-This repository provides an automated system for testing Shopify order flows, returns, and refunds. It uses a template-based approach to generate consistent test data across different Shopify stores and manages execution via two distinct methodologies.
-
----
-
-## 🧪 Testing Methodologies
-
-There are two primary ways to create test data in this system:
-
-### 1. Live Shopify Order Creation (Web Scenarios)
-*   **Goal**: Create real orders, returns, and refunds on your Shopify store via the Admin API.
-*   **Source**: Files in the `scenarios/` directory.
-*   **Tool**: `run.js` (uses Postman Collections + Newman).
-*   **Workflow**: Creates a live order -> Validates against store state -> Downloads the resulting JSON.
-
-### 2. Direct Payload Replication (POS Scenarios)
-*   **Goal**: Simulate bulk order data by replicating existing JSON payloads directly.
-*   **Source**: Files in the `pos_scenarios/` directory.
-*   **Tool**: `replicate_orders.js`.
-*   **Workflow**: Takes a "perfect" POS JSON -> Generates $N$ unique copies with randomized IDs -> Uploads/Saves them for downstream system testing (like Moqui).
+This project is a comprehensive automation toolkit designed to streamline the testing of Shopify order workflows, including complex scenarios like mixed carts, returns, refunds, and POS data replication. It leverages AI Agents, Postman Collections, and Node.js scripts to provide a robust testing environment.
 
 ---
 
-## 🚀 Quick Start for New Shops (e.g., `gorjana-sandbox`)
+## 🚀 Key Capabilities & Skills
 
-If you are setting this up for a new Shopify store, follow these steps:
+This project is powered by three main "Skills" that automate specific domains of the testing process:
 
-### 1. Clone & Install
-```bash
-git clone <repository-url>
-cd shopify-order-testing
-npm install
-```
+### 1. Shopify Order Testing (`shopify-order-testing`)
+*   **Purpose**: The core intelligence for creating and executing live order scenarios.
+*   **Capabilities**:
+    *   **Natural Language Processing**: Interprets requests like "Create a mixed cart order with 3 items, 30% discount, and fulfill one item."
+    *   **Complex Scenarios**: Handles logical requirements such as:
+        *   **Mixed Carts**: Combining shipping and pickup items (using custom attributes like `_pickupstore`).
+        *   **Taxes & Discounts**: applying line-item taxes and order-level discount codes (e.g., `HC_GIFT`).
+        *   **Fulfillment**: Automatically creating fulfillments for specific line items.
+        *   **Post-Order Actions**: Managing Refunds, Returns, and Cancellations.
+*   **Execution**: Generates precise JSON scenario files in `scenarios/adhoc/` and executes them using the `OrderAndRefunds.postman_collection.json`.
 
-### 2. Configure Shop Settings
-Open `config/shop_config.json` and update it with your store's details:
-*   **`shopName`**: Your Shopify store subdomain (e.g., `gorjana-sandbox`).
-*   **`accessToken`**: Your Shopify Admin API access token.
-*   **`mappings`**: Update the Variant IDs and Prices to match active products in your store.
-    *   Find valid `variantId`s in Shopify Admin and paste them into `{{VARIANT_1}}`, `{{VARIANT_2}}`, etc.
-    *   Update `{{CUSTOMER_1}}` with a valid Customer GID.
+### 2. Shopify Setup (`shopify-setup`)
+*   **Purpose**: Bootstraps the local environment with real data from your live Shopify store.
+*   **Capabilities**:
+    *   Fetches active **Product Variants** and **Customers** directly from the Shopify Admin API.
+    *   Populates `config/shop_config.json` with valid `gid://` references (e.g., `{{VARIANT_1}}`, `{{CUSTOMER_1}}`).
+    *   Ensures test scenarios always run against valid, in-stock inventory.
 
-### 3. Generate Scenario Files
-Run the update script to propagate your config changes into all scenario files. This reads the **Templates** and generates the actual test files.
-```bash
-node scripts/update_scenarios.js
-```
-
-### 4. Run your first test
-```bash
-# Method 1: Create a live order on Shopify
-node run.js --collection "OrderCreation.postman_collection.json" --scenario "scenarios/order_creation/basic.json"
-```
+### 3. Order Replication (`order-replication`)
+*   **Purpose**: generative testing for high-volume or POS (Point of Sale) scenarios.
+*   **Capabilities**:
+    *   Allows taking a single "Golden" POS JSON file and replicating it $N$ times.
+    *   **Unique ID Generation**: Randomizes `id`, `order_number`, and `name` to prevent duplication errors in downstream systems (like ERPs/OMS).
+    *   **Direct Upload**: Automatically uploads generated files to an external system (like Moqui MDM).
+    *   **Script**: `scripts/replicate_orders.js`.
 
 ---
 
-## 🛠 Automation Tools
+## 🛠 Project Structure
 
-### 1. Scenario Generator (`update_scenarios.js`)
-We do not edit files in the `scenarios/` or `pos_scenarios/` directories directly. Instead:
-*   **Source**: `scenario_templates/` contains JSON files with tokens like `{{VARIANT_1}}`.
-*   **Process**: `node scripts/update_scenarios.js` replaces tokens with values from `shop_config.json`.
-*   **Shuffle**: Use `--shuffle` to randomize which products are used in which scenarios.
-    ```bash
-    node scripts/update_scenarios.js --shuffle
-    ```
-
-### 2. Bulk Replicator (`replicate_orders.js`)
-Primarily used for **POS scenarios** to create volume for performance or sync testing.
-```bash
-node replicate_orders.js --input pos_scenarios/POS_EXC_EQUAL_RS.json --count 50
+```text
+├── .agent/skills/           # Definitions for AI Agent skills (Order Testing, Setup, Replication)
+├── config/
+│   └── shop_config.json     # Local config mapping logical tokens (VARIANT_1) to real Shopify IDs
+├── orders/                  # Directory for storing downloaded order details
+├── pos_scenarios/           # Templates for POS order replication
+├── scenarios/
+│   └── adhoc/               # Generated specific test scenarios (e.g., create_mixed_cart.json)
+├── scenario_templates/      # Reusable templates for standard flows
+├── scripts/
+│   └── replicate_orders.js  # Script for bulk order replication
+├── shopify_env.json         # Postman Environment variables (API Version, Secrets)
+├── OrderCreation.postman_collection.json    # Collection for basic order flows
+├── OrderAndRefunds.postman_collection.json  # Collection for advanced flows (Returns/Refunds)
+└── README.md
 ```
 
 ---
 
-## 📖 Usage Guide & Collections
+## 🏁 Getting Started
 
-### Live Execution (`run.js`)
-**Arguments:**
-*   `--collection` (or `-c`): The Postman collection name.
-*   `--scenario` (or `-s`): The path to the scenario JSON (from the `scenarios/` folder).
+### Prerequisites
+*   Node.js & npm
+*   Newman (`npm install -g newman`)
+*   A Shopify Private App with Admin API access.
 
-**Available Collections:**
-- `OrderCreation.postman_collection.json`: Standard web order flows.
-- `DraftOrderCreation.postman_collection.json`: Draft order to Order completion.
-- `OrderAndRefunds.postman_collection.json`: Complex refund and return processing.
+### 1. Setup Configuration
+Update `config/shop_config.json` with your store credentials:
+```json
+{
+    "shopName": "your-shop-name",
+    "accessToken": "shpat_xxxxxxxxxxxxxxxx",
+    "mappings": { ... } // Populated by shopify-setup skill
+}
+```
 
----
+### 2. Run a Test (Manual / CLI)
+You can execute created scenarios directly using Newman:
 
-## 📂 Project Structure
+**Basic Order Creation:**
+```bash
+newman run OrderAndRefunds.postman_collection.json -e shopify_env.json -d scenarios/adhoc/create_2_items.json
+```
 
-*   `config/`: Store-specific configuration (`shop_config.json`).
-*   `scenario_templates/`: The **Source of Truth** for all test cases.
-*   `scenarios/`: **(Generated)** Web order scenarios for live Shopify creation.
-*   `pos_scenarios/`: **(Generated)** POS order payloads for direct replication.
-*   `scripts/`: Automation scripts for generation and environment management.
-*   `shopify_env.json`: Postman environment settings (Auto-updated).
-*   `run.js`: The engine for live Shopify testing.
-*   `replicate_orders.js`: The engine for bulk payload replication.
-*   `orders/`: Downloaded JSON payloads of orders created during live tests.
+**Complex Flow (Order + Fulfillment + Refund):**
+```bash
+newman run OrderAndRefunds.postman_collection.json -e shopify_env.json -d scenarios/adhoc/create_mixed_cart_3_items_tax_discount.json
+```
+
+### 3. Bulk Replication & Direct Upload
+You can replicate a POS order and optionally upload it directly to an MDM system (like Moqui).
+
+**Configuration:**
+Open `scripts/replicate_orders.js` and update the constants at the top of the file:
+```javascript
+const MOQUI_URL = "https://your-instance.hotwax.io/rest/s1/admin/uploadDataManagerFile";
+const MOQUI_TOKEN = "your_bearer_token"; // Optional if auth is required
+```
+
+**Generate & Upload Command:**
+To generate 50 unique copies and upload them immediately:
+```bash
+node scripts/replicate_orders.js --input pos_scenarios/POS_Test_Order.json --count 50 --upload
+```
