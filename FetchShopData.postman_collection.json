@@ -1,0 +1,127 @@
+{
+    "info": {
+        "name": "Fetch Shop Data (Setup)",
+        "description": "Fetch available product variants and customers from Shopify to populate shop_config.json",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "GetProductVariants",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "const response = pm.response.json();",
+                            "if (response.data?.products?.edges) {",
+                            "    const variants = response.data.products.edges.map((edge, idx) => ({",
+                            "        key: `{{VARIANT_${idx + 1}}}`,",
+                            "        priceKey: `{{PRICE_${idx + 1}}}`,",
+                            "        id: edge.node.variants.edges[0].node.id,",
+                            "        price: parseFloat(edge.node.variants.edges[0].node.price),",
+                            "        title: edge.node.title",
+                            "    }));",
+                            "    ",
+                            "    pm.environment.set('fetchedVariants', JSON.stringify(variants));",
+                            "    console.log('[Setup] Variants fetched:', variants.length);",
+                            "} else {",
+                            "    console.error('[Setup] Failed to fetch variants');",
+                            "}"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "X-Shopify-Access-Token",
+                        "value": "{{accessToken}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "graphql",
+                    "graphql": {
+                        "query": "query GetProductVariants {\n  products(first: 6) {\n    edges {\n      node {\n        id\n        title\n        variants(first: 1) {\n          edges {\n            node {\n              id\n              title\n              price\n            }\n          }\n        }\n      }\n    }\n  }\n}",
+                        "variables": ""
+                    }
+                },
+                "url": {
+                    "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+                    "protocol": "https",
+                    "host": [
+                        "{{shopName}}",
+                        "myshopify",
+                        "com"
+                    ],
+                    "path": [
+                        "admin",
+                        "api",
+                        "{{apiVersion}}",
+                        "graphql.json"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "GetCustomers",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "const response = pm.response.json();",
+                            "if (response.data?.customers?.edges) {",
+                            "    const customers = response.data.customers.edges.map((edge, idx) => ({",
+                            "        key: `{{CUSTOMER_${idx + 1}}}`,",
+                            "        id: edge.node.id,",
+                            "        name: `${edge.node.firstName} ${edge.node.lastName}`",
+                            "    }));",
+                            "    ",
+                            "    pm.environment.set('fetchedCustomers', JSON.stringify(customers));",
+                            "    console.log('[Setup] Customers fetched:', customers.length);",
+                            "} else {",
+                            "    console.error('[Setup] Failed to fetch customers');",
+                            "}"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "X-Shopify-Access-Token",
+                        "value": "{{accessToken}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "graphql",
+                    "graphql": {
+                        "query": "query GetCustomers {\n  customers(first: 5) {\n    edges {\n      node {\n        id\n        firstName\n        lastName\n        email\n      }\n    }\n  }\n}",
+                        "variables": ""
+                    }
+                },
+                "url": {
+                    "raw": "https://{{shopName}}.myshopify.com/admin/api/{{apiVersion}}/graphql.json",
+                    "protocol": "https",
+                    "host": [
+                        "{{shopName}}",
+                        "myshopify",
+                        "com"
+                    ],
+                    "path": [
+                        "admin",
+                        "api",
+                        "{{apiVersion}}",
+                        "graphql.json"
+                    ]
+                }
+            }
+        }
+    ]
+}
