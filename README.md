@@ -102,3 +102,27 @@ To generate 50 unique copies and upload them immediately:
 ```bash
 node scripts/replicate_orders.js --input pos_scenarios/POS_Test_Order.json --count 50 --upload
 ```
+
+---
+
+## 🤖 Sample Prompts for AI Agent
+
+You can interact with the AI Agent using natural language to perform various tasks. Here are some example prompts aligned with the available skills:
+
+### 1. Setup & Configuration (`shopify-setup`)
+*   **Configure Store Credentials:**
+    > "Setup the shop_config for shop `krewe-sunglasses` and access token: `token1232324`"
+*   **Refresh Data:**
+    > "Fetch the latest product variants and customers from the store to update the local configuration."
+
+### 2. Order Creation (`shopify-order-testing`)
+*   **Complex Order:**
+    > "Create a mixed cart order with 3 items, one fulfilled, and a 30% discount code `HC_GIFT`."
+*   **Tax & Shipping:**
+    > "Create an order with 2 items, and include state tax."
+
+### 3. Order Replication (`order-replication`)
+*   **Replication from Existing File:**
+    > "Replicate the order from `replicated_orders/DM47740_ShopifyOrder.json`."
+*   **Replication with Upload:**
+    > "Replicate the POS order json `pos_scenarios/New_York_POS.json` 50 times and upload the results."
