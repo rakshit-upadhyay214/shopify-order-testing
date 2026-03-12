@@ -1,0 +1,11 @@
+{
+    "shopName": "your-shop-name",
+    "accessToken": "your-access-token", 
+    "mappings": {
+        "{{VARIANT_1}}": "gid://shopify/ProductVariant/YOUR_VARIANT_ID_1",
+        "{{PRICE_1}}": 0.00,
+        "{{VARIANT_2}}": "gid://shopify/ProductVariant/YOUR_VARIANT_ID_2",
+        "{{PRICE_2}}": 0.00,
+        "{{CUSTOMER_1}}": "gid://shopify/Customer/YOUR_CUSTOMER_ID_1"
+    }
+}
