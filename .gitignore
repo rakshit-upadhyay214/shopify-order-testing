@@ -3,7 +3,10 @@ node_modules/
 
 # Environment Variables (Sensitive Data)
 shopify_env.json
+config/
 .env
+config/shop_config.json
+shopify_env.json
 
 # Output Directories (Generated Data)
 orders/
