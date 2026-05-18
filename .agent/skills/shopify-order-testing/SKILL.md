@@ -102,16 +102,16 @@ Apply these transformations based on specific user prompts:
 
 ### Phase 4: Execution & Reporting
 1.  **Select Collection**:
-    - **Single Comprehensive Collection**: `OrderAndRefunds.postman_collection.json` (Handles Creation, Fulfillment, Refunds, Returns)
+    - **Single Comprehensive Collection**: `collections/OrderAndRefunds.postman_collection.json` (Handles Creation, Fulfillment, Refunds, Returns)
 
 2.  **Execute with Newman**:
-    Run newman directly with the scenario as iteration data:
+    Run newman directly using the `shopify_env.json` environment file (which is kept in sync with the correct credentials, without any structural or formatting alterations):
     ```bash
-    newman run OrderAndRefunds.postman_collection.json -e shopify_env.json -d <scenario-path>
+    newman run collections/OrderAndRefunds.postman_collection.json -e shopify_env.json -d <scenario-path>
     ```
     Example:
     ```bash
-    newman run OrderAndRefunds.postman_collection.json -e shopify_env.json -d scenarios/adhoc/create_2_items.json
+    newman run collections/OrderAndRefunds.postman_collection.json -e shopify_env.json -d scenarios/adhoc/create_2_items.json
     ```
     
 3.  **Monitor Console Output**:

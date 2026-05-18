@@ -10,35 +10,39 @@ This skill empowers the Agent to autonomously configure the test environment by 
 
 ## Capability Context
 The Agent performs the following actions:
-1.  **Execute Collection**: Runs `FetchShopData.postman_collection.json` using `newman`.
+1.  **Execute Collection**: Runs `collections/FetchShopData.postman_collection.json` using `newman`.
 2.  **Capture Output**: Exports the environment variables (containing fetched data) to a temporary file.
 3.  **Parse & Update**: Reads the exported data and updates `config/shop_config.json` with new mappings.
 
 ## Workflow Instructions
 
-### Step 1: credential Check & Update
-**CRITICAL**: If the user provides a `shopName` or `accessToken` in the chat:
-1.  **IMMEDIATELY** update `shopify_env.json`:
-    *   Set `shopName` value.
-    *   Set `accessToken` value.
-2.  **IMMEDIATELY** update `config/shop_config.json`:
+### Step 1: Credential Check & Update
+**CRITICAL**: If the user provides a `shopName` or `accessToken` in the chat, the Agent **MUST** update both configuration files:
+1.  **Update `config/shop_config.json`**:
     *   Set `shopName`.
     *   Set `accessToken`.
+2.  **Update `shopify_env.json`**:
+    *   Parse the file as JSON.
+    *   Find the objects inside the `values` array where `key === "shopName"` and `key === "accessToken"`.
+    *   Update their `value` fields respectively.
+    *   Write the JSON back to `shopify_env.json` (preserving the formatting, do NOT use Newman to export or overwrite it).
 3.  Only then proceed to Step 2.
 
 ### Step 2: Execute Postman Collection
 Run the collection and export the updated environment directly back to `shopify_env.json`:
 ```bash
-newman run FetchShopData.postman_collection.json -e shopify_env.json --export-environment shopify_env.json
+newman run collections/FetchShopData.postman_collection.json -e shopify_env.json --export-environment shopify_env.json
 ```
 
-### Step 3: Read & Parse Environment Data
+### Step 3: Read, Parse & Clean Environment Data
 1.  Read the updated `shopify_env.json`.
 2.  Extract the values for:
     *   `fetchedVariants` (Stringified JSON array of variants)
     *   `fetchedCustomers` (Stringified JSON array of customers)
-    *   `accessToken` (The current access token)
-    *   `shopName` (The current shop name)
+3.  **Clean up `shopify_env.json` immediately** to prevent environment corruption and formatting changes:
+    *   Filter the `values` array to keep **ONLY** the standard core variables: `shopName`, `accessToken`, and `apiVersion`.
+    *   Remove all other transient/temporary variables (such as `fetchedVariants`, `fetchedCustomers`, `orderId`, `fulfillmentOrderId`, etc.) from the `values` array.
+    *   Save the clean, standard-formatted JSON back to `shopify_env.json` (e.g. using `JSON.stringify(env, null, 2)`).
 
 ### Step 4: Update `config/shop_config.json`
 1.  Read the existing `config/shop_config.json`.

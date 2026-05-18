@@ -49,7 +49,7 @@ async function uploadToMoqui(filePath, url, token) {
         const fileName = path.basename(filePath);
         const blob = new Blob([fileContent], { type: 'application/json' });
         const formData = new FormData();
-        formData.append('configId', 'ShopifyOrdersWebhook');
+        formData.append('configId', 'SYNC_SHOPIFY_ORDER');
         formData.append('contentFile', blob, fileName);
 
         const headers = {};

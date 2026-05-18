@@ -11,7 +11,7 @@ This workflow guides you through creating and executing Shopify test orders with
 // turbo
 1. Fetch available product variants from Shopify:
    ```
-   newman run FetchVariants.postman_collection.json -e shopify_env.json
+   newman run collections/FetchShopData.postman_collection.json -e shopify_env.json --export-environment shopify_env.json
    ```
 
 2. Review the console output showing available variants and copy the variant mappings
@@ -52,17 +52,17 @@ This workflow guides you through creating and executing Shopify test orders with
 ## Phase 4: Execution
 
 9. Select the appropriate Postman collection:
-   - Simple orders: `OrderCreation.postman_collection.json`
-   - Orders with refunds/returns: `OrderAndRefunds.postman_collection.json`
+   - Simple orders: `collections/OrderCreation.postman_collection.json`
+   - Orders with refunds/returns: `collections/OrderAndRefunds.postman_collection.json`
 
 // turbo
 10. Execute with newman:
     ```
-    newman run <collection>.postman_collection.json -e shopify_env.json -d <scenario-path>
+    newman run collections/<collection>.postman_collection.json -e shopify_env.json -d <scenario-path>
     ```
     Example:
     ```
-    newman run OrderAndRefunds.postman_collection.json -e shopify_env.json -d scenarios/refunds_returns/WEB_FUL_RFD_NRS.json
+    newman run collections/OrderAndRefunds.postman_collection.json -e shopify_env.json -d scenarios/refunds_returns/WEB_FUL_RFD_NRS.json
     ```
 
 11. Monitor console output for `[Automation] Order Created: gid://shopify/Order/XXXXX`

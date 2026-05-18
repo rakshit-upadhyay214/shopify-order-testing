@@ -37,5 +37,4 @@ Check the console output for the generated filename. It will be saved under `rep
 
 ## Best Practices
 - **Isolation**: Use this for high-volume testing where live Shopify order creation is too slow or costly.
-- **POS Mapping**: When testing POS flows, use the files in `pos_scenarios/` as templates.
-- **Upload Config**: If the upload fails, verify the `MOQUI_URL` and `MOQUI_TOKEN` constants inside `scripts/replicate_orders.js`.
+- **Upload Config**: To upload replicated orders, you must specify a valid, authorized Moqui instance **JWT token** in the `MOQUI_TOKEN` constant and update the target URL `MOQUI_URL` inside `scripts/replicate_orders.js`.

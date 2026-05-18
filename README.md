@@ -17,7 +17,7 @@ This project is powered by three main "Skills" that automate specific domains of
         *   **Taxes & Discounts**: applying line-item taxes and order-level discount codes (e.g., `HC_GIFT`).
         *   **Fulfillment**: Automatically creating fulfillments for specific line items.
         *   **Post-Order Actions**: Managing Refunds, Returns, and Cancellations.
-*   **Execution**: Generates precise JSON scenario files in `scenarios/adhoc/` and executes them using the `OrderAndRefunds.postman_collection.json`.
+*   **Execution**: Generates precise JSON scenario files in `scenarios/adhoc/` and executes them using the `collections/OrderAndRefunds.postman_collection.json`.
 
 ### 2. Shopify Setup (`shopify-setup`)
 *   **Purpose**: Bootstraps the local environment with real data from your live Shopify store.
@@ -27,10 +27,10 @@ This project is powered by three main "Skills" that automate specific domains of
     *   Ensures test scenarios always run against valid, in-stock inventory.
 
 ### 3. Order Replication (`order-replication`)
-*   **Purpose**: generative testing for high-volume or POS (Point of Sale) scenarios.
+*   **Purpose**: generative testing for high-volume and orders with different sales channel scenarios.
 *   **Capabilities**:
-    *   Allows taking a single "Golden" POS JSON file and replicating it $N$ times.
-    *   **Unique ID Generation**: Randomizes `id`, `order_number`, and `name` to prevent duplication errors in downstream systems (like ERPs/OMS).
+    *   Allows taking a single order JSON file and replicating it $N$ times.
+    *   **Unique ID Generation**: Randomizes `id`, `order_number`, and `name` to prevent duplication errors in oms
     *   **Direct Upload**: Automatically uploads generated files to an external system (like Moqui MDM).
     *   **Script**: `scripts/replicate_orders.js`.
 
@@ -39,19 +39,22 @@ This project is powered by three main "Skills" that automate specific domains of
 ## 🛠 Project Structure
 
 ```text
-├── .agent/skills/           # Definitions for AI Agent skills (Order Testing, Setup, Replication)
-├── config/
+├── .agent/                  # AI Agent configuration
+│   ├── skills/              # Definitions for AI Agent skills (Order Testing, Setup, Replication)
+│   └── workflows/           # Guided workflows (e.g., shopify-order-test.md)
+├── collections/             # Postman Collections (OrderCreation, OrderAndRefunds, FetchShopData, etc.)
+├── config/                  # Configuration directory (ignored by git)
 │   └── shop_config.json     # Local config mapping logical tokens (VARIANT_1) to real Shopify IDs
-├── orders/                  # Directory for storing downloaded order details
-├── pos_scenarios/           # Templates for POS order replication
-├── scenarios/
-│   └── adhoc/               # Generated specific test scenarios (e.g., create_mixed_cart.json)
+├── scenarios/               # Generated specific test scenarios (ignored by git)
+│   └── adhoc/               # Ad-hoc generated test scenarios
 ├── scenario_templates/      # Reusable templates for standard flows
+│   └── scenarios/
+│       ├── order_creation/  # Templates for standard order creation
+│       └── refunds_returns/ # Templates for order actions (Refund, Return, Cancel)
 ├── scripts/
 │   └── replicate_orders.js  # Script for bulk order replication
+├── .gitignore               # Files and folders ignored by git
 ├── shopify_env.json         # Postman Environment variables (API Version, Secrets)
-├── OrderCreation.postman_collection.json    # Collection for basic order flows
-├── OrderAndRefunds.postman_collection.json  # Collection for advanced flows (Returns/Refunds)
 └── README.md
 ```
 
@@ -107,28 +110,32 @@ Execute created scenarios directly using Newman:
 
 **Basic Order Creation:**
 ```bash
-newman run OrderAndRefunds.postman_collection.json -e shopify_env.json -d scenarios/adhoc/create_2_items.json
+newman run collections/OrderAndRefunds.postman_collection.json -e shopify_env.json -d scenarios/adhoc/create_2_items.json
 ```
 
 **Complex Flow (Order + Fulfillment + Refund):**
 ```bash
-newman run OrderAndRefunds.postman_collection.json -e shopify_env.json -d scenarios/adhoc/create_mixed_cart_3_items_tax_discount.json
+newman run collections/OrderAndRefunds.postman_collection.json -e shopify_env.json -d scenarios/adhoc/create_mixed_cart_3_items_tax_discount.json
 ```
 
 ### 3. Bulk Replication & Direct Upload
-You can replicate a POS order and optionally upload it directly to an MDM system (like Moqui).
+You can replicate an order JSON file and optionally upload it directly to an MDM in Moqui.
+
+> [!IMPORTANT]
+> **Authentication Requirement**: To upload replicated orders to a target instance, you must configure a valid, authorized **JWT (JSON Web Token)** of the target Moqui instance. The script will automatically send this JWT in the `Authorization` header of the upload request.
 
 **Configuration:**
 Open `scripts/replicate_orders.js` and update the constants at the top of the file:
 ```javascript
-const MOQUI_URL = "https://your-instance.hotwax.io/rest/s1/admin/uploadDataManagerFile";
-const MOQUI_TOKEN = "your_bearer_token"; // Optional if auth is required
+const MOQUI_URL = "https://krewe-maarg-uat.hotwax.io/rest/s1/admin/uploadDataManagerFile";
+const MOQUI_TOKEN = "your_authorized_jwt_here"; // Paste your authorized JWT token here
 ```
+*Note: The script will automatically format this token as a `Bearer` token (if not already prefixed with `Bearer ` or `Basic `).*
 
 **Generate & Upload Command:**
 To generate 50 unique copies and upload them immediately:
 ```bash
-node scripts/replicate_orders.js --input pos_scenarios/POS_Test_Order.json --count 50 --upload
+node scripts/replicate_orders.js --input New_York_POS.json --count 50 --upload
 ```
 
 ---
@@ -151,6 +158,6 @@ You can interact with the AI Agent using natural language to perform various tas
 
 ### 3. Order Replication (`order-replication`)
 *   **Replication from Existing File:**
-    > "Replicate the order from `replicated_orders/DM47740_ShopifyOrder.json`."
+    > "Replicate the order from `ShopifyOrder.json`."
 *   **Replication with Upload:**
-    > "Replicate the POS order json `pos_scenarios/New_York_POS.json` 50 times and upload the results."
+    > "Replicate the POS order json `New_York_POS.json` 50 times and upload the results."
