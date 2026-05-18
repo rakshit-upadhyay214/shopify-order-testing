@@ -64,18 +64,46 @@ This project is powered by three main "Skills" that automate specific domains of
 *   Newman (`npm install -g newman`)
 *   A Shopify Private App with Admin API access.
 
-### 1. Setup Configuration
-Update `config/shop_config.json` with your store credentials:
+### 🚀 First-Time Setup & Automation Workflow (AI Agent Flow)
+
+You can bootstrap this entire project and run tests seamlessly by simply prompting the AI Agent. Follow this exact sequence for first-time setup:
+
+#### Step 1: Configure Store Credentials
+Tell the AI Agent your Shopify store name and Admin API access token. The Agent will automatically update `config/shop_config.json` and sync it with `shopify_env.json`.
+*   **Prompt to Agent:**
+    > "Setup the shop_config for shop `your-shop-name` and access token: `shpat_your_token_here`"
+
+#### Step 2: Fetch and Sync Shop Data
+Ask the Agent to fetch the latest product variants and customers from your Shopify store. The Agent will run the setup Postman collection, parse the retrieved data, and automatically populate all required mappings (like `{{VARIANT_1}}`, `{{CUSTOMER_1}}`, etc.) inside `config/shop_config.json`.
+*   **Prompt to Agent:**
+    > "Fetch the latest product variants and customers from the store to update the local configuration."
+
+#### Step 3: Create and Execute Test Orders
+Once the store mappings are populated, you can ask the Agent to create any test orders. The Agent will select the correct Postman collection, build a concrete JSON scenario, execute it with Newman, and provide a direct Shopify admin order link.
+*   **Prompts to Agent:**
+    *   *Create simple order:*
+        > "Create an order with 2 items."
+    *   *Create mixed shipping/pickup order:*
+        > "Create a mixed cart order with 3 items, one fulfilled, and a 30% discount code `WELCOME10`."
+
+---
+
+### 💻 Manual CLI Execution (Without AI Agent)
+
+If you prefer to run things manually using the command line:
+
+#### 1. Setup Configuration
+Update `config/shop_config.json` manually with your store credentials:
 ```json
 {
     "shopName": "your-shop-name",
     "accessToken": "shpat_xxxxxxxxxxxxxxxx",
-    "mappings": { ... } // Populated by shopify-setup skill
+    "mappings": { ... } // Populated by shopify-setup skill or fetched manually
 }
 ```
 
-### 2. Run a Test (Manual / CLI)
-You can execute created scenarios directly using Newman:
+#### 2. Run a Test (Newman CLI)
+Execute created scenarios directly using Newman:
 
 **Basic Order Creation:**
 ```bash
