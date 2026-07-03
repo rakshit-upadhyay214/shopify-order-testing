@@ -1,5 +1,6 @@
 [
     {
+        // STAGE-1: POS order creation
         "payload": {
             "note": "POS EXC EQUAL RS",
             "refundAgreements": [
@@ -166,6 +167,7 @@
         }
     },
     {
+        // STAGE-2: Order returned with equal exchange
         "payload": {
             "note": "POS EXC EQUAL RS",
             "refundAgreements": [
